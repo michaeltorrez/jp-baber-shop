@@ -322,6 +322,18 @@ b, strong {
   width: 7.5rem;
 }
 
+.swal2-popup {
+  border-radius: var(--jp-border-radius-lg);
+  background-color: var(--jp-secondary-bg);
+  color: var(--jp-body-color);
+}
+.swal2-popup .swal2-title {
+  color: var(--jp-heading-color);
+}
+.swal2-popup .swal2-html-container {
+  color: var(--jp-body-color);
+}
+
 .login-bg {
   background-image: url("../images/login-bg.jpg");
   background-position: center;
@@ -339,3 +351,4 @@ b, strong {
   min-height: 100vh;
 }
 
+/*# sourceMappingURL=app.css.map */

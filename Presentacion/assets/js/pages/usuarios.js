@@ -1,9 +1,9 @@
 
-
+// Para personalizar el mensaje de sweetAlert2
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
-    confirmButton: "btn btn-primary",
-    cancelButton: "btn btn-danger"
+    confirmButton: "btn btn-danger me-2",
+    cancelButton: "btn"
   },
   buttonsStyling: false
 });

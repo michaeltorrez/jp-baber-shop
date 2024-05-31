@@ -12,7 +12,6 @@
     $apellidos = $usuario['apellidos'];
     $correo = $usuario['correo'];
     $usuario = $usuario['usuario'];
-    //$contrasena = $usuario['contrasena'];
   }
 
   // incluimos el doctype y html
@@ -43,7 +42,10 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Nuevo usuario', 'title' => 'Nuevo usuario'));
+          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', [
+            'pagetitle' => isset($id) ? 'Editar usuario': 'Nuevo usuario',
+            'title' => isset($id) ? 'Editar usuario': 'Nuevo usuario'
+          ]);
         ?>
 
         <div class="row mt-4">

@@ -1,6 +1,5 @@
 <?php
 
-
 function validaciones_predefinidas($tipo) {
   $validaciones = [
     'usuario' => [
@@ -22,55 +21,6 @@ function validaciones_predefinidas($tipo) {
   return $validaciones[$tipo] ?? [];
 }
 
-
-
-function validar_form_usuario($nombres, $apellidos, $correo, $usuario, $contrasena) {
-  $campos = array(
-    'nombres' => array(
-      'valor' => $nombres,
-      'validaciones' => array(
-        array('tipo' => 'empty', 'mensaje' => 'El campo nombres es obligatorio'),
-        array('tipo' => 'longitud', 'min' => 2, 'mensaje' => 'El o los nombres debe tener al menos 2 caracteres'),
-        array('tipo' => 'patron', 'patron' => '/^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]{2,29}$/', 'mensaje' => 'Nombre(s) inválido(s)')
-      )
-    ),
-    'apellidos' => array(
-      'valor' => $apellidos,
-      'validaciones' => array(
-        array('tipo' => 'empty', 'mensaje' => 'El campo apellidos es obligatorio'),
-        array('tipo' => 'longitud', 'min' => 2, 'mensaje' => 'El o los apellidos debe tener al menos 2 caracteres'),
-        array('tipo' => 'patron', 'patron' => '/^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]{2,29}$/', 'mensaje' => 'Apellidos inválidos')
-      )
-    ),
-    'correo' => array(
-      'valor' => $correo,
-      'validaciones' => array(
-        array(
-          'tipo' => 'empty',
-          'mensaje' => 'El correo es obligatorio'
-        ),
-        array('tipo' => 'filter', 'filtro' => FILTER_VALIDATE_EMAIL, 'mensaje' => 'El correo no es válido'
-        )
-      )
-    ),
-    'usuario' => array(
-      'valor' => $usuario,
-      'validaciones' => array(
-        array('tipo' => 'empty', 'mensaje' => 'El usuario es obligatorio'),
-        array('tipo' => 'longitud', 'min' => 2, 'mensaje' => 'El nombre de usuario debe tener al menos 2 caracteres'),
-        array ('tipo' => 'patron', 'patron' => '/^[a-zA-Z0-9_]{2,20}$/', 'mensaje' => 'El nombre de usuario debe tener entre 2 y 20 caracteres alfanuméricos o guiones bajos')
-      )
-    ),
-    'contrasena' => array(
-      'valor' => $contrasena,
-      'validaciones' => array(
-        array('tipo' => 'empty', 'mensaje' => 'La contraseña es obligatoria'),
-        array('tipo' => 'longitud', 'min' => 8, 'mensaje' => 'La contraseña debe tener al menos 8 caracteres')
-      )
-    )
-  );
-  return validar_campos($campos);
-}
 
 function validar_campos($campos) {
   $errores = [];
@@ -105,115 +55,6 @@ function validar_campos($campos) {
             break;
         }
       }
-    }
-  }
-
-  return $errores;
-}
-
-
-function validar_campos_old($campos) {
-  $errores = [];
-
-  foreach ($campos as $compo) {
-    $valor = isset($compo['valor']) ? trim($compo['valor']) : '';
-
-    if (isset($compo['validaciones']) && is_array($compo['validaciones'])) {
-      foreach ($compo['validaciones'] as $validacion) {
-        switch ($validacion['tipo']) {
-          case 'empty':
-            if (empty($valor)) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          case 'longitud':
-            if (isset($validacion['min']) && strlen($valor) < $validacion['min']) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          case 'patron':
-            if (isset($validacion['patron']) && !preg_match($validacion['patron'], $valor)) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          case 'filter':
-            if (isset($validacion['filtro']) && !filter_var($valor, $validacion['filtro'])) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          // Agregar más casos según las necesidades
-        }
-      }
-    }
-  }
-
-  return $errores;
-}
-
-function validar_campos2($campos) {
-  $errores = [];
-
-  foreach ($campos as $nombreCampo => $reglas) {
-    $valor = isset($reglas['valor']) ? trim($reglas['valor']) : '';
-
-    if (isset($reglas['validaciones']) && is_array($reglas['validaciones'])) {
-      foreach ($reglas['validaciones'] as $validacion) {
-        switch ($validacion['tipo']) {
-          case 'empty':
-            if (empty($valor)) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          case 'longitud':
-            if (isset($validacion['min']) && strlen($valor) < $validacion['min']) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          case 'patron':
-            if (isset($validacion['patron']) && !preg_match($validacion['patron'], $valor)) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          case 'filter':
-            if (isset($validacion['filtro']) && !filter_var($valor, $validacion['filtro'])) {
-                $errores[] = $validacion['mensaje'];
-            }
-            break;
-          // Agregar más casos según las necesidades
-        }
-      }
-    }
-  }
-
-  return $errores;
-}
-
-function validar_valor($valor, $validaciones) {
-  $errores = [];
-
-  foreach ($validaciones as $validacion) {
-    switch ($validacion['tipo']) {
-      case 'empty':
-        if (empty($valor)) {
-          $errores[] = $validacion['mensaje'];
-        }
-        break;
-      case 'longitud':
-        if (isset($validacion['min']) && strlen($valor) < $validacion['min']) {
-          $errores[] = $validacion['mensaje'];
-        }
-        break;
-      case 'patron':
-        if (isset($validacion['patron']) && !preg_match($validacion['patron'], $valor)) {
-          $errores[] = $validacion['mensaje'];
-        }
-        break;
-      case 'filter':
-        if (isset($validacion['filtro']) && !filter_var($valor, $validacion['filtro'])) {
-          $errores[] = $validacion['mensaje'];
-        }
-        break;
-      // Agregar más casos según las necesidades
     }
   }
 

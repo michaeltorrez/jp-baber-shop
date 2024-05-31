@@ -198,12 +198,14 @@ class dUsuario {
       $con = $conexion->Conectar();
       $stmt = $con->prepare('CALL ObtenerUsuario(?)');
       $parametro = $con->real_escape_string($this->usuario);
-      $stmt->bind_param('s', $this->usuario);
+      $stmt->bind_param('s', $parametro);
       $respuesta = $stmt->execute();
       $respuesta = $stmt->get_result();
 
       if ($respuesta->num_rows == 1) {
         $resultado = $respuesta->fetch_assoc();
+      } elseif ($respuesta->num_rows > 1) {
+        $resultado = $respuesta->fetch_array();
       }
       
       $stmt->close();

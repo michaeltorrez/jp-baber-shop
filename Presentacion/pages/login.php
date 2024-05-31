@@ -30,7 +30,7 @@
                 <p class="text-muted mt-2">Ingrese su usuario y contraseña para iniciar sesión</p>
               </div>
 
-              <form class="mt-4 pt-2" action="/login" method="post">
+              <form id="form_login" class="mt-4 pt-2">
 
                 <div class="mb-3">
                   <label class="form-label" for="username">Usuario</label>
@@ -47,12 +47,24 @@
                     Iniciar sesión
                   </button>
                 </div>
-
+                
               </form>
+            </div>
+          </div>
+        </div>
+        <div class="position-fixed bottom-0 start-50 translate-middle-x p-3">
+          <div id="liveToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body">
+                Usuario y/o contraseña inválida!
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script src="<?= ASSETS_URL ?>/js/bootstrap.bundle.min.js"></script>
+  <script src="<?= ASSETS_URL ?>/js/pages/login.js"></script>
 </body>

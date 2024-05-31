@@ -59,8 +59,11 @@ $$
 DELIMITER $$
 CREATE PROCEDURE ObtenerUsuario(IN _usuario varchar(30))
 BEGIN
-	SELECT id_usuario, nombres, apellidos, usuario, contrasena
-	FROM usuario WHERE usuario = _usuario;
+	SELECT u.nombres, u.apellidos, u.usuario, u.contrasena, r.descripcion AS roles
+	FROM usuario u
+	INNER JOIN usuario_rol ur ON u.id_usuario = ur.id_usuario
+	INNER JOIN rol r ON ur.id_rol = r.id_rol
+	WHERE usuario = _usuario AND u.estado = 1 AND ur.estado = 1 AND r.estado = 1;
 END;
 $$
 
