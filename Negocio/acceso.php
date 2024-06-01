@@ -17,5 +17,3 @@
     }
   }
   $_SESSION['timeout'] = time();
-
-?>

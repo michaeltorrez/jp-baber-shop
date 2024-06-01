@@ -13,8 +13,7 @@
         session_start();
         $_SESSION['usuario'] = $usuario['usuario'];
         $_SESSION['nombre_completo'] = trim($usuario['nombres'].' '.$usuario['apellidos']);
-        $_SESSION['rol'] = $usuario['rol'];
-        echo json_encode(['success' => 'okis']);
+        echo json_encode(['success' => 'Usuario autenticado correctamente']);
         exit;
       } 
     }

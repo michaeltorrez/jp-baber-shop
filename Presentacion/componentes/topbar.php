@@ -27,9 +27,9 @@
               <span class="d-none d-xl-inline-block fw-medium">
                 <?= $_SESSION['nombre_completo'] ?>
               </span>
-              <span class="d-none d-xl-block text-muted">
+              <!-- <span class="d-none d-xl-block text-muted">
                 <?= $_SESSION['rol'] ?>
-              </span>
+              </span> -->
             </span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </span>

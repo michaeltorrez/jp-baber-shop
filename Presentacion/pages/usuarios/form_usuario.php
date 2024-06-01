@@ -119,7 +119,9 @@
                     <div class="col-xl-12 mt-3">
                       <div class="d-flex gap-2 justify-content-end">
                         <button type="button" class="btn" name="cancelar" onclick="location.href='/usuarios'">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" id="btn_submit"><?= isset($id) ? 'Editar': 'Agregar' ?></button>
+                        <button type="submit" class="btn btn-primary" id="btn_submit">
+                          <?= isset($id) ? 'Editar': 'Agregar' ?>
+                        </button>
                       </div>
                     </div>
                   </div>

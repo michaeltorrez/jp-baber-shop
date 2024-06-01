@@ -22,10 +22,7 @@ function eliminar_usuario(id) {
     if (result.isConfirmed) {
       var formdata = new FormData();
       formdata.append('id', id);
-      fetch('eliminar_usuario.php', {
-        method: 'POST',
-        body: formdata,
-      })
+      fetch(`usuarios/eliminar/${id}`, { method: 'POST', body: formdata })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -49,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const form_usuario = document.getElementById('form_usuario');
     form_usuario.addEventListener('submit', (event) => nuevo_usuario(event))
   } 
-
 })
 
 

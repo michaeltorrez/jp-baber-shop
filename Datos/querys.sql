@@ -59,11 +59,21 @@ $$
 DELIMITER $$
 CREATE PROCEDURE ObtenerUsuario(IN _usuario varchar(30))
 BEGIN
-	SELECT u.nombres, u.apellidos, u.usuario, u.contrasena, r.descripcion AS roles
-	FROM usuario u
-	INNER JOIN usuario_rol ur ON u.id_usuario = ur.id_usuario
-	INNER JOIN rol r ON ur.id_rol = r.id_rol
-	WHERE usuario = _usuario AND u.estado = 1 AND ur.estado = 1 AND r.estado = 1;
+	SELECT id_usuario, nombres, apellidos, usuario, contrasena
+	FROM usuario
+	WHERE usuario = _usuario AND estado = 1;
+END;
+$$
+
+-- obtener roles de usuario
+DELIMITER $$
+CREATE PROCEDURE ObtenerRolesDeUsuario(IN _id_usuario varchar(30))
+BEGIN
+	SELECT r.descripcion
+	FROM usuario_rol ur
+	INNER JOIN usuario u ON u.id_usuario = ur.id_usuario
+	INNER JOIN rol r ON r.id_rol = ur.id_rol
+	WHERE u.usuario = _id_usuario AND u.estado = 1;
 END;
 $$
 
@@ -72,7 +82,7 @@ $$
 DELIMITER $$
 CREATE PROCEDURE EliminarUsuario(in _id_usuario int(10))
 BEGIN
-	UPDATE usuario SET estado = 0 WHERE usuarios.id_usuario = _id_usuario;
+	UPDATE usuario SET estado = 0 WHERE id_usuario = _id_usuario;
 END;
 $$
 
@@ -147,7 +157,7 @@ $$
 DELIMITER $$
 CREATE PROCEDURE ListarRoles()
 BEGIN
-	SELECT * FROM roles WHERE roles.estado = 1;
+	SELECT * FROM rol WHERE estado = 1;
 END;
 $$
 
@@ -172,9 +182,9 @@ $$
 
 -- eliminar rol
 DELIMITER $$
-CREATE PROCEDURE EliminarRol(in _id int(10))
+CREATE PROCEDURE EliminarRol(in _id_rol int(10))
 BEGIN
-	UPDATE roles SET estado = 0 WHERE roles.id = _id;
+	UPDATE rol SET estado = 0 WHERE id_rol = _id_rol;
 END;
 $$
 
@@ -199,6 +209,8 @@ BEGIN
 	WHERE a.estado = 1;
 END;
 $$
+
+
 --listar modificado acomodado para no modificar tanto el codigo
 DELIMITER $$
 DROP PROCEDURE IF EXISTS ListarAsignaciones $$

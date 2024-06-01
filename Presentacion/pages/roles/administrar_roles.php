@@ -1,7 +1,8 @@
 <?php
-  include '../../assets/utiles/config.php';
-  include '../../layout/main.php';
-  include '../../../Negocio/nRol.php';
+  include_once 'assets/utiles/config.php';
+  include_once '../Negocio/acceso.php';
+  include_once '../Negocio/roles/nRol.php';
+  include_once '../Negocio/funciones.php';
 
   function listrar_roles() {
     $usu = new nRol();
@@ -9,20 +10,23 @@
   }
 
   $roles = listrar_roles();
+
+  // incluimos el doctype y html
+  include_once LAYOUT_PATH.'/main.php';
 ?>
 
 <head>
   <?php
-    include '../../layout/css.php';
     include_archivo_con_variables(LAYOUT_PATH.'/meta.php', array('title' => 'Roles'));
+    include LAYOUT_PATH.'/css.php';
   ?>
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/dataTables.bootstrap5.css">
 </head>
 <div class="layout-wrapper">
   <?php
-    include '../../componentes/topbar.php';
-    include '../../componentes/sidebar.php';
+    include 'componentes/topbar.php';
+    include 'componentes/sidebar.php';
   ?>
   <div class="main-content">
     <div class="page-content">
@@ -73,12 +77,12 @@
                               <td class="text-left col-10"><?php echo $rol['descripcion'] ?></td>
                               <td class="text-center col-2">
                                 <div class="d-flex justify-content-center">
-                                  <a class="btn btn-sm" href="actualizar_rol.php?id=<?= $rol['id'] ?>" role="button">
-                                    <span class="msr fs-5 text-primary">edit</span>
+                                  <a class="btn btn-sm" href="actualizar_rol.php?id=<?= $rol['id_rol'] ?>" role="button">
+                                    <span class="msr fs-5">edit</span>
                                   </a>
     
-                                  <button class="btn btn-sm" onclick="eliminar_rol(<?= $rol['id'] ?>)">
-                                    <span class="msr fs-5 text-danger">delete</span>
+                                  <button class="btn btn-sm" onclick="eliminar_rol(<?= $rol['id_rol'] ?>)">
+                                    <span class="msr fs-5">delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -128,4 +132,4 @@
 
 <script src="<?= ASSETS_URL ?>/js/pages/roles.js"></script>
 
-<?php include '../../layout/footer.php' ?>
+<?php include LAYOUT_PATH.'/footer.php' ?>

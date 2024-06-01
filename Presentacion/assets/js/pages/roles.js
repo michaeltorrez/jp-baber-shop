@@ -1,7 +1,8 @@
+// Para personalizar el mensaje de sweetAlert2
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
-    confirmButton: "btn btn-primary",
-    cancelButton: "btn btn-danger"
+    confirmButton: "btn btn-danger me-2",
+    cancelButton: "btn"
   },
   buttonsStyling: false
 });
@@ -18,12 +19,8 @@ function eliminar_rol(id) {
     showCloseButton: true
   }).then((result) => {
     if (result.isConfirmed) {
-      var formdata = new FormData();
-      formdata.append('id', id);
-      fetch('eliminar_rol.php', {
-        method: 'POST',
-        body: formdata,
-      })
+      console.log('asdasdasda  paso')
+      fetch(`roles/eliminar/${id}`, { method: 'POST' })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -40,5 +37,23 @@ function eliminar_rol(id) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("dt-search-0").focus()
+  pathname = window.location.pathname
+  if (pathname === '/roles') {
+    document.getElementById("dt-search-0").focus()
+  } else if (pathname === '/roles/nuevo' || pathname.startsWith('/roles/editar/')) {
+    const form_rol = document.getElementById('form_rol');
+    form_rol.addEventListener('submit', (event) => nuevo_rol(event))
+  } 
 })
+
+function nuevo_rol(event) {
+  event.preventDefault()
+
+  const datos = new FormData(form_rol)
+
+  fetch('', { method: 'POST', body: datos })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data)
+  })
+}

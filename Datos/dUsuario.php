@@ -202,11 +202,11 @@ class dUsuario {
       $respuesta = $stmt->execute();
       $respuesta = $stmt->get_result();
 
-      if ($respuesta->num_rows == 1) {
+      if ($respuesta->num_rows > 0) {
         $resultado = $respuesta->fetch_assoc();
-      } elseif ($respuesta->num_rows > 1) {
+      } /*elseif ($respuesta->num_rows > 1) {
         $resultado = $respuesta->fetch_array();
-      }
+      }*/
       
       $stmt->close();
       $con->close();
