@@ -41,6 +41,10 @@ $rutas->get('roles/nuevo', function() {
   include 'pages/roles/form_rol.php';
 });
 
+$rutas->post('roles/nuevo', function() {
+  include '../Negocio/roles/agregar_rol.php';
+});
+
 $rutas->post('roles/editar/:id', function($id) {
   include '../Negocio/roles/editar_rol.php';
 });
@@ -50,6 +54,16 @@ $rutas->post('roles/eliminar/:id', function($id) {
 });
 // ----------------------------------------------------
 
+
+// -------------------- USUARIO-ROL --------------------
+$rutas->get('usuario-rol', function() {
+  include 'pages/usuario-rol/administrar_usuario-rol.php';
+});
+
+$rutas->get('usuario-rol/nuevo', function() {
+  include 'pages/usuario-rol/asignar_usuario-rol.php';
+});
+// -----------------------------------------------------
 $rutas->get('login', function() {
   include 'pages/login.php';
 });

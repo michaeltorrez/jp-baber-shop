@@ -2,7 +2,7 @@
 declare(strict_types = 1);//solo funciona con variables de tipo escalares
 require_once 'dConexion.php';
 
-class dAsignar {
+class dUsuarioRol {
 
   //Constructor property promotion
   public function __construct(
@@ -23,7 +23,7 @@ class dAsignar {
 
 
   public function listar_asignaciones(): array {
-    $lista = $this->consulta_listar('CALL ListarAsignaciones()');
+    $lista = $this->consulta_listar('CALL ListarUsuarioRol()');
     return $lista;
   }
 

@@ -1,7 +1,7 @@
 <?php
   require_once '../Negocio/usuarios/nUsuario.php';
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usu = new nUsuario($id);
     
     if ($usu->eliminar_usuario()) {

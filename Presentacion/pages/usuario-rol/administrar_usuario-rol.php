@@ -1,7 +1,8 @@
 <?php
-  include '../../assets/utiles/config.php';
-  include '../../layout/main.php';
-  include '../../../Negocio/nAsignar.php';
+  include_once 'assets/utiles/config.php';
+  include_once '../Negocio/acceso.php';
+  include_once '../Negocio/usuario-rol/nUsuarioRol.php';
+  include_once '../Negocio/funciones.php';
 
   function listrar_asignaciones() {
     $asig = new nAsignar();
@@ -18,16 +19,16 @@
 }
     </script>
   <?php
-    include_archivo_con_variables('../../layout/meta.php', array('title' => 'Asignar rol'));
-    include '../../layout/css.php'
+    include_archivo_con_variables(LAYOUT_PATH.'/meta.php', array('title' => 'Asignar rol'));
+    include LAYOUT_PATH.'/css.php'
   ?>
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/dataTables.bootstrap5.css">
 </head>
 <div class="layout-wrapper">
   <?php
-    include '../../componentes/topbar.php';
-    include '../../componentes/sidebar.php';
+    include 'componentes/topbar.php';
+    include 'componentes/sidebar.php';
   ?>
   <div class="main-content">
     <div class="page-content">
@@ -138,4 +139,4 @@
 
 <script src="<?= ASSETS_URL ?>/js/pages/asignar.js"></script>
 
-<?php include '../../layout/footer.php' ?>
+<?php include LAYOUT_PATH.'/footer.php' ?>

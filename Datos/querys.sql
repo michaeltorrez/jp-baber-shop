@@ -15,18 +15,18 @@ CREATE TABLE db_jp_barber_shop.usuario (
 -- roles
 CREATE TABLE db_jp_barber_shop.rol (
 	id_rol INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	descripcion VARCHAR(50) NOT NULL,
+	descripcion VARCHAR(50) NOT NULL UNIQUE,
 	estado INT(1) NOT NULL
 );
 
 
 -- asignar_rol
 CREATE TABLE db_jp_barber_shop.usuario_rol (
-	id_usuario_rol INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	id_usuario INT(10),
 	id_rol INT(10),
 	fecha_asignacion DATE,
 	estado INT(1) NOT NULL,
+	PRIMARY KEY (id_usuario, id_rol),
 	FOREIGN KEY fk_id_usuario(id_usuario) REFERENCES usuario(id_usuario),
 	FOREIGN KEY fk_id_rol(id_rol) REFERENCES rol(id_rol)
 );
@@ -140,7 +140,7 @@ $$
 DELIMITER $$
 CREATE PROCEDURE CrearRol(in _descripcion varchar(50))
 BEGIN
-	INSERT INTO roles (descripcion, estado)
+	INSERT INTO rol (descripcion, estado)
 	VALUES (_descripcion, 1);
 END;
 $$
@@ -188,7 +188,7 @@ BEGIN
 END;
 $$
 
--- ======================================== ASIGNAR ========================================
+-- ======================================== USUARIO ROL ========================================
 -- crear asignación
 DELIMITER $$
 CREATE PROCEDURE CrearAsignacion(IN _id_usuario INT(10), IN _id_rol INT(10))
@@ -201,12 +201,12 @@ $$
 
 -- listar asignación
 DELIMITER $$
-CREATE PROCEDURE ListarAsignaciones()
+CREATE PROCEDURE ListarUsuarioRol()
 BEGIN
-	SELECT a.*, u.nombre_usuario, r.descripcion FROM asignar_rol a
-	INNER JOIN usuarios u ON a.id_usuario = u.id
-	INNER JOIN roles r ON a.id_rol = r.id
-	WHERE a.estado = 1;
+	SELECT ur.*, u.usuario, r.descripcion FROM usuario_rol ur
+	INNER JOIN usuario u ON ur.id_usuario = u.id_usuario
+	INNER JOIN rol r ON ur.id_rol = r.id_rol
+	WHERE ur.estado = 1;
 END;
 $$
 

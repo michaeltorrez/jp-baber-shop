@@ -73,3 +73,20 @@ function initActiveMenu() {
     }
   }
 }
+
+
+export function mostrar_errores(errores) {
+  console.log('mostrar', errores)
+  // for (const campo in errores) {
+  //   if (errores.hasOwnProperty(campo)) {
+  //     const errorDiv = document.getElementById(`error-${campo}`);
+  //     if (errorDiv) {
+  //       errores[campo].forEach(error => {
+  //         const p = document.createElement('p');
+  //         p.textContent = `* ${error}`;
+  //         errorDiv.appendChild(p);
+  //       });
+  //     }
+  //   }
+  // }
+}

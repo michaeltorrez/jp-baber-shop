@@ -1,15 +1,17 @@
+//import { mostrar_errores } from 'app.js'
+
 // Para personalizar el mensaje de sweetAlert2
-const swalWithBootstrapButtons = Swal.mixin({
+const SwalPersonalizado = Swal.mixin({
   customClass: {
-    confirmButton: "btn btn-danger me-2",
-    cancelButton: "btn"
+    confirmButton: "btn btn-primary",
+    cancelButton: "btn ms-2"
   },
   buttonsStyling: false
 });
 
 
 function eliminar_rol(id) {
-  swalWithBootstrapButtons.fire({
+  SwalPersonalizado.fire({
     title: "¿Estás seguro?",
     text: "¡No podrás revertir esto!",
     icon: "warning",
@@ -24,7 +26,7 @@ function eliminar_rol(id) {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          swalWithBootstrapButtons.fire({
+          SwalPersonalizado.fire({
             title: "¡Eliminado!",
             text: "El rol ha sido eliminado.",
             icon: "success",
@@ -46,14 +48,43 @@ document.addEventListener("DOMContentLoaded", function() {
   } 
 })
 
+// funcion para crear nuevo rol
 function nuevo_rol(event) {
   event.preventDefault()
-
   const datos = new FormData(form_rol)
 
-  fetch('', { method: 'POST', body: datos })
-  .then(response => response.json())
+  // llamda fetch a crear_rol.php atravez del index (enrutamiento)
+  fetch('/roles/nuevo', { method: 'POST', body: datos })
+  .then(response => response.json()) // la respuesta la convertimos a json
   .then(data => {
-    console.log(data)
+    // verificamos si en la data de respuestas existe un mensaje de exito
+    if (data.success) {
+      // Mostrar SweetAlert2 con el mensaje de éxito
+      SwalPersonalizado.fire({
+        title: 'Éxito',
+        text: data.success,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(() => location.href = '/roles') // redirigimos a lista de roles
+    
+    // verificamos si en la data de respuestas existen errores
+    } else if (data.errores) {
+      mostrar_errores(data.errores)
+    }
   })
+}
+
+function mostrar_errores(errores) {
+  for (const campo in errores) {
+    if (errores.hasOwnProperty(campo)) {
+      const errorDiv = document.getElementById(`error-${campo}`);
+      if (errorDiv) {
+        errores[campo].forEach(error => {
+          const p = document.createElement('p');
+          p.textContent = `* ${error}`;
+          errorDiv.appendChild(p);
+        });
+      }
+    }
+  }
 }

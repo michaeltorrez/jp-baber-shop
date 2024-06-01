@@ -62,7 +62,18 @@ async function nuevo_usuario(event) {
   fetch(url, { method: 'POST', body: datos })
   .then( response => response.json())
   .then(data => {
-    if (data.errores) {
+    if (data.success) {
+      // Mostrar SweetAlert2 con el mensaje de éxito
+      Swal.fire({
+        title: 'Éxito',
+        text: data.success,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        // Redireccionamos a la lista de usuarios
+        window.location.href = '/usuarios'
+      })
+    } else if (data.errores) {
       // Mostrar errores debajo de los campos correspondientes
       for (const campo in data.errores) {
         if (data.errores.hasOwnProperty(campo)) {
@@ -76,17 +87,6 @@ async function nuevo_usuario(event) {
           }
         }
       }
-    } else if (data.success) {
-      // Mostrar SweetAlert2 con el mensaje de éxito
-      Swal.fire({
-        title: 'Éxito',
-        text: data.success,
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      }).then(() => {
-        // Redireccionamos a la lista de usuarios
-        window.location.href = '/usuarios'
-      })
     }
   })
 }

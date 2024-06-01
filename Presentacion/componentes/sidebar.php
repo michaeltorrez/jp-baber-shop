@@ -21,9 +21,9 @@
           'active' => $page === 'administrarRoles.php'
         ],
         [
-          'titulo' => 'Asignar usuario-rol',
-          'link' => 'asignar',
-          'active' => $page === 'asignarRol.php'
+          'titulo' => 'Usuario -> rol',
+          'link' => '/usuario-rol',
+          'active' => $page === 'usuario-rol.php'
         ]
       ]
     ],
