@@ -6,7 +6,6 @@ class dUsuarioRol {
 
   //Constructor property promotion
   public function __construct(
-    private int $id,
     private int $id_usuario,
     private int $id_rol,
     private $fecha_asignacion
@@ -28,8 +27,15 @@ class dUsuarioRol {
   }
 
 
+  public function listar_roles_disponibles() {
+    $parametros = [['tipo' => 'i', 'valor' => $this->id_usuario]];
+    $lista = $this->consulta_listar('CALL ListarRolesDisponibles(?)', $parametros);
+    return $lista;
+  }
+
+
   function eliminar_asignacion() {
-    $parametros = [['tipo' => 'i', 'valor' => $this->id]];
+    $parametros = [['tipo' => 'i', 'valor' => $this->id_usuario]];
     return $this->ejecutarConsulta('CALL EliminarAsignacion(?)', $parametros);
   }
 
@@ -66,17 +72,30 @@ class dUsuarioRol {
   }
 
 
-  private function consulta_listar($consulta): array|false {
+  private function consulta_listar($consulta, $parametros = []): array|bool {
     $conect = new dConexion();
     $resultado = false;
 
     try {
       $con = $conect->Conectar();
-      $respuesta = $con->query($consulta);
+      $stmt = $con->prepare($consulta);
+
+      if (!empty($parametros)) {
+        $tipos = '';
+        $valores = [];
+        foreach ($parametros as $parametro) {
+          $tipos .= $parametro['tipo'];
+          $valores[] = $parametro['valor'];
+        }
+        $stmt->bind_param($tipos, ...$valores);
+      }
+      $respuesta = $stmt->execute();
 
       if ($respuesta) {
-        $resultado = $respuesta->fetch_all(MYSQLI_ASSOC);
+        $resultado = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
       }
+
+      $stmt->close();
       $con->close();
     } catch (Exception $exc) {
       $exc->getTraceAsString();

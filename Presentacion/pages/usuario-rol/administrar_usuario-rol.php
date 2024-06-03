@@ -1,23 +1,14 @@
 <?php
   include_once 'assets/utiles/config.php';
   include_once '../Negocio/acceso.php';
-  include_once '../Negocio/usuario-rol/nUsuarioRol.php';
+  include_once '../Negocio/usuario-rol/funciones.php';
   include_once '../Negocio/funciones.php';
 
-  function listrar_asignaciones() {
-    $asig = new nAsignar();
-    return $asig->listar_asignaciones();
-  }
-
-  $asignaciones = listrar_asignaciones();
+  // incluimos el doctype y html
+  include_once LAYOUT_PATH.'/main.php';
 ?>
 
 <head>
-<script>
-        if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'auto';  // o 'manual'
-}
-    </script>
   <?php
     include_archivo_con_variables(LAYOUT_PATH.'/meta.php', array('title' => 'Asignar rol'));
     include LAYOUT_PATH.'/css.php'
@@ -34,7 +25,7 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables('../../layout/page-title.php', array('pagetitle' => 'Asignar usuario-rol', 'title' => 'Asignar usuario-rol'));
+          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Asignar usuario-rol', 'title' => 'Asignar usuario-rol'));
         ?>
         <div class="row mt-4">
           <div class="col-12">
@@ -47,7 +38,7 @@
                     </div>
                   </div>
                   <div class="col-sm-auto">
-                    <a class="btn btn-sm btn-primary" href="asignar/nueva" role="button">
+                    <a class="btn btn-sm btn-primary" href="usuario-rol/asignar" role="button">
                       <div class="d-flex align-items-center gap-1">
                         <span class="msr">add</span>
                         Asignar
@@ -65,7 +56,7 @@
                         <tr>
                           <th class="text-center">#</th>
                           <th class="text-center">Usuario</th>
-                          <th class="text-center">Nombres y apellidos</th>
+                          <th class="text-center">Nombre completo</th>
                           <th class="text-center">Rol</th>
                           <th class="text-center">Fecha de asignación</th>
                           <th class="text-center">Acciones</th>
@@ -74,6 +65,7 @@
     
                       <tbody>
                       <?php
+                        $asignaciones = listar_usuario_rol();
                         if ($asignaciones) {
                           $nro = 1;
                           foreach($asignaciones as $asignacion) : 
@@ -81,16 +73,18 @@
                           ?>
                             <tr>
                               <td class="text-center col-1"><?= $nro ?></td>
-                              <td class="text-left col-2"><?= $asignacion['nombre_usuario'] ?></td>
-                              <td class="text-left col-3"><?= $asignacion['nombres_apellidos'] ?></td>
+                              <td class="text-left col-2"><?= $asignacion['usuario'] ?></td>
+                              <td class="text-left col-3"><?= $asignacion['nombre_completo'] ?></td>
                               <td class="text-left col-2"><?= $asignacion['descripcion'] ?></td>
                               <td class="text-center col-2"><?= $fecha ? $fecha->format('d/m/Y H:i:s'): '' ?></td>
                               <td class="text-center col-2">
-                                <div class="d-flex justify-content-center">
-                                  <button class="btn btn-sm" onclick="eliminar_asignacion(<?= $asignacion['id'] ?>)">
-                                    <span class="msr fs-5 text-danger">delete</span>
-                                  </button>
-                                </div>
+                                <?php if (!$asignacion['id_rol'] == null): ?>
+                                  <div class="d-flex justify-content-center">
+                                    <button class="btn btn-sm" onclick="eliminar_asignacion(<?= $asignacion['id_usuario'] ?>, <?= $asignacion['id_rol'] ?>)">
+                                      <span class="msr fs-5">delete</span>
+                                    </button>
+                                  </div>
+                                <?php endif; ?>
                               </td>
                             </tr>
                       <?php

@@ -6,13 +6,13 @@
     exit;
   }
 
-  $inactive = 600; // 10 minutos de inactividad
+  $inactive = 900; // 15 minutos de inactividad
   if (isset($_SESSION['timeout'])) {
     $session_life = time() - $_SESSION['timeout'];
     if ($session_life > $inactive) {
-      session_unset();
-      session_destroy();
-      header("Location: /login");
+      session_unset();// borramos el contenido de la sesion
+      session_destroy();//destruimos la sesion
+      header("Location: /login");// redirigimos a login
       exit;
     }
   }

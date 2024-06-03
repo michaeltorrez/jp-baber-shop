@@ -7,7 +7,29 @@ const swalWithBootstrapButtons = Swal.mixin({
 });
 
 
-function eliminar_asignacion(id) {
+function cargar_roles() {
+  const select_usuario = document.getElementById('select_usuario')
+
+  select_usuario.addEventListener('change', () => {
+    const id = select_usuario.value
+
+    fetch(`/usuario-rol/roles-disponibles/${id}`, { method: 'POST' })
+    .then(response => response.json())
+    .then(data => {
+      const select_roles = document.getElementById('rol')
+      select_roles.innerHTML = '<option value="" disabled selected hidden></option>'
+      data.success.forEach(rol => {
+        let nuevaOpcion = document.createElement("option")
+        nuevaOpcion.value = rol.id_rol
+        nuevaOpcion.text = rol.descripcion
+        select_roles.add(nuevaOpcion)
+      });
+    })
+  })
+}
+
+
+function eliminar_asignacion(id_usuario, id_rol) {
   swalWithBootstrapButtons.fire({
     title: "¿Estás seguro?",
     text: "¡No podrás revertir esto!",
@@ -19,7 +41,7 @@ function eliminar_asignacion(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       var formdata = new FormData();
-      formdata.append('id', id);
+      formdata.append('id', id_usuario);
       fetch('eliminar_asignacion.php', {
         method: 'POST',
         body: formdata,
@@ -41,5 +63,16 @@ function eliminar_asignacion(id) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("dt-search-0").focus()
+  switch (window.location.pathname) {
+    case '/usuario-rol':
+      document.getElementById("dt-search-0").focus()
+      break;
+    
+    case '/usuario-rol/asignar':
+      cargar_roles()
+      break;
+
+    default:
+      break;
+  }
 })

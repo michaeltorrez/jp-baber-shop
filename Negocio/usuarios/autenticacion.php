@@ -20,4 +20,3 @@
     echo json_encode(['errores' => ['usuario' => ['Usuario no encontrado']]]);
     exit;
   }
-?>

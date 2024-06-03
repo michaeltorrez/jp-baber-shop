@@ -60,10 +60,19 @@ $rutas->get('usuario-rol', function() {
   include 'pages/usuario-rol/administrar_usuario-rol.php';
 });
 
+$rutas->get('usuario-rol/asignar', function() {
+  include 'pages/usuario-rol/asignar_usuario-rol.php';
+});
+
 $rutas->get('usuario-rol/nuevo', function() {
   include 'pages/usuario-rol/asignar_usuario-rol.php';
 });
+
+$rutas->post('usuario-rol/roles-disponibles/:id', function($id) {
+  include '../Negocio/usuario-rol/cargar_roles.php';
+});
 // -----------------------------------------------------
+
 $rutas->get('login', function() {
   include 'pages/login.php';
 });

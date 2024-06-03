@@ -24,6 +24,7 @@ class nRol {
     return $this->rol->listar_roles();
   }
 
+
   public function obtener_rol() : array {
     return $this->rol->obtener_rol();
   }

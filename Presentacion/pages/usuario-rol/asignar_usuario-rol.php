@@ -1,13 +1,13 @@
 <?php
-  require_once '../../assets/utiles/config.php';
-  require_once '../../layout/main.php';
-  require_once '../../../Negocio/nAsignar.php';
-  include_once '../../../Negocio/funciones.php';
+  include_once 'assets/utiles/config.php';
+  include_once '../Negocio/acceso.php';
+  include_once '../Negocio/usuario-rol/funciones.php';
+  include_once '../Negocio/funciones.php';
 
-  $usuarios = cargar_usuarios();
-  $roles = cargar_roles();
+  $usuarios = listar_usuarios();
+  $roles = [];//cargar_roles();
 
-  if (isset($_POST['agregar'])) {
+  /*if (isset($_POST['agregar'])) {
     $id_usuario = (int)trim($_POST['id_usuario']);
     $id_rol = (int)trim($_POST['id_rol']);
 
@@ -25,12 +25,12 @@
       }
     //}
 
-  }
+  }*/
 ?>
 <head>
   <?php
-    include_archivo_con_variables('../../layout/meta.php', array('title' => 'Nueva asignacion'));
-    require_once '../../layout/css.php';
+    include_archivo_con_variables(LAYOUT_PATH.'/meta.php', array('title' => 'Nueva asignacion'));
+    require_once LAYOUT_PATH.'/css.php';
   ?>
 </head>
 
@@ -38,52 +38,37 @@
 
 <div class="layout-wrapper">
   <?php
-    include '../../componentes/topbar.php';
-    include '../../componentes/sidebar.php';
+    include 'componentes/topbar.php';
+    include 'componentes/sidebar.php';
   ?>
   <div class="main-content">
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables('../../layout/page-title.php', array('pagetitle' => 'Nueva asignacion', 'title' => 'Nueva asignacion'));
+          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Nueva asignacion', 'title' => 'Nueva asignacion'));
         ?>
 
         <div class="row mt-4">
           <div class="col-xl-9">
             <div class="card">
               <div class="card-body">
-                <form action="/asignar/nueva" method="post">
-                  <?php if (!empty($errores)) : ?>
-                    <div class="alert alert-danger" role="alert">
-                      <ul>
-                        <?php foreach ($errores as $tipoError => $mensajeError) : ?>
-                          <li><?= $mensajeError ?></li>
-                        <?php endforeach; ?>
-                      </ul>
-                    </div>
-                  <?php endif; ?>
+                <form id="form-asignar">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="mb-3">
                         <label for="usuario" class="form-label">Usuario</label>
-                          <select autofocus class="form-control" name="id_usuario" id="usuario" required>
-                            <option value="0">Seleccione un usuario...</option>
+                          <select autofocus class="form-control" name="id_usuario" id="select_usuario" required>
+                            <option value="" disabled selected hidden></option>
                             <?php
                               foreach ($usuarios as $usuario) : ?>
-                                <option value="<?= $usuario['id'] ?>"><?= $usuario['nombre_usuario'] ?></option>
+                                <option value="<?= $usuario['id_usuario'] ?>"><?= $usuario['usuario'] ?></option>
                             <?php endforeach; ?>
                           </select>
                       </div>
 
                       <div class="mb-3">
                         <label for="rol" class="form-label">Rol</label>
-                          <select class="form-control" name="id_rol" id="rol" required>
-                            <option value="0">Seleccione un rol...</option>
-                            <?php
-                              foreach ($roles as $rol) : ?>
-                                <option value="<?= $rol['id'] ?>"><?= $rol['descripcion'] ?></option>
-                            <?php endforeach; ?>
-                          </select>
+                          <select class="form-control" name="id_rol" id="rol" required></select>
                       </div>
                     </div>
 
@@ -91,7 +76,7 @@
                     <div class="col-xl-12">
                       <div class="d-flex gap-2 justify-content-end">
                         <button type="submit" class="btn btn-primary" name="agregar">Agregar</button>
-                        <button type="button" class="btn btn-secondary"  name="cancelar" onclick="location.href='/asignar'">Cancelar</button>
+                        <button type="button" class="btn btn-light"  name="cancelar" onclick="location.href='/usuario-rol'">Cancelar</button>
                       </div>
                     </div>
                   </div>
@@ -106,4 +91,6 @@
   </div>
 </div>
 
-<?php include '../../layout/footer.php' ?>
+<script src="<?= ASSETS_URL ?>/js/pages/usuario-rol.js"></script>
+
+<?php include LAYOUT_PATH.'/footer.php' ?>

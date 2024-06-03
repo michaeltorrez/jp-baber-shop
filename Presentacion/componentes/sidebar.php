@@ -21,7 +21,7 @@
           'active' => $page === 'administrarRoles.php'
         ],
         [
-          'titulo' => 'Usuario -> rol',
+          'titulo' => 'Usuario-rol',
           'link' => '/usuario-rol',
           'active' => $page === 'usuario-rol.php'
         ]

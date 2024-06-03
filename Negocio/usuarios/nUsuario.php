@@ -39,8 +39,11 @@ class nUsuario {
 
 
   function listar_usuarios() {
-    $respuesta = $this->usuario->listar_usuarios();
-    return $respuesta;
+    return $this->usuario->listar_usuarios();
+  }
+
+  function listar_usuarios_2() {
+    return $this->usuario->listar_usuarios_2();
   }
 
   function actualizar_usuario() {

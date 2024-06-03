@@ -48,9 +48,19 @@ $$
 
 -- listar usuarios
 DELIMITER $$
+DROP PROCEDURE IF EXISTS ListarUsuarios $$
 CREATE PROCEDURE ListarUsuarios()
 BEGIN
 	SELECT * FROM usuario WHERE usuario.estado = 1;
+END;
+$$
+
+-- listar usuarios 2
+DELIMITER $$
+DROP PROCEDURE IF EXISTS ListarUsuarios2 $$
+CREATE PROCEDURE ListarUsuarios2()
+BEGIN
+	SELECT id_usuario, usuario FROM usuario WHERE usuario.estado = 1;
 END;
 $$
 
@@ -191,9 +201,9 @@ $$
 -- ======================================== USUARIO ROL ========================================
 -- crear asignación
 DELIMITER $$
-CREATE PROCEDURE CrearAsignacion(IN _id_usuario INT(10), IN _id_rol INT(10))
+CREATE PROCEDURE AsignarUsuarioRol(IN _id_usuario INT(10), IN _id_rol INT(10))
 BEGIN
-	INSERT INTO asignar_rol (id_usuario, id_rol, fecha_asignacion, estado)
+	INSERT INTO usuario_rol (id_usuario, id_rol, fecha_asignacion, estado)
 	VALUES (_id_usuario, _id_rol, NOW(), 1);
 END;
 $$
@@ -211,24 +221,38 @@ END;
 $$
 
 
---listar modificado acomodado para no modificar tanto el codigo
+--listar usuario-rol
 DELIMITER $$
-DROP PROCEDURE IF EXISTS ListarAsignaciones $$
-CREATE PROCEDURE ListarAsignaciones()
+DROP PROCEDURE IF EXISTS ListarUsuarioRol $$
+CREATE PROCEDURE ListarUsuarioRol()
 BEGIN
-	SELECT u.id AS id_usuario, u.nombres_apellidos, u.nombre_usuario , a.id, a.fecha_asignacion, r.id AS id_rol, r.descripcion
-	FROM usuarios u
-	LEFT JOIN asignar_rol a ON u.id = a.id_usuario
-	LEFT JOIN roles r ON a.id_rol = r.id
+	SELECT u.id_usuario, u.usuario, CONCAT(u.nombres, ' ', u.apellidos) AS nombre_completo, ur.fecha_asignacion, r.id_rol, r.descripcion
+	FROM usuario u
+	LEFT JOIN usuario_rol ur ON u.id_usuario = ur.id_usuario
+	LEFT JOIN rol r ON ur.id_rol = r.id_rol
 	WHERE u.estado = 1;
+END;
+$$
+
+
+-- listar roles no asignados a un usuario
+DELIMITER $$
+DROP PROCEDURE IF EXISTS ListarRolesDisponibles $$
+CREATE PROCEDURE ListarRolesDisponibles(IN _id_usuario varchar(30))
+BEGIN
+	SELECT r.id_rol, r.descripcion 
+	FROM rol r
+	LEFT JOIN usuario_rol ur ON r.id_rol = ur.id_rol AND ur.id_usuario = _id_usuario
+	WHERE ur.id_rol IS NULL;
 END;
 $$
 
 
 -- eliminar asignación
 DELIMITER $$
-CREATE PROCEDURE EliminarAsignacion(in _id int(10))
+DROP PROCEDURE IF EXISTS EliminarAsignacion $$
+CREATE PROCEDURE EliminarAsignacion(IN _id int(10), IN _id_rol int(10))
 BEGIN
-	UPDATE asignar_rol SET estado = 0 WHERE asignar_rol.id = _id;
+	UPDATE usuario_rol SET estado = 0 WHERE id_usuario = _id_usuario AND id_rol = _id_rol;
 END;
 $$

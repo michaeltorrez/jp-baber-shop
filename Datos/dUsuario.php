@@ -12,14 +12,14 @@ class dUsuario {
     private $contrasena
   ) {}
 
-
+/*
   function getCorreo() {
     return $this->correo;
   }
 
   function getNombre_usuario() {
     return $this->usuario;
-  }
+  }*/
 
 
   function crear_usuario() {
@@ -93,12 +93,19 @@ class dUsuario {
 
 
   function listar_usuarios() {
+    return $this->listar('CALL ListarUsuarios()');
+  }
+
+  function listar_usuarios_2() {
+    return $this->listar('CALL ListarUsuarios2()');
+  }
+
+  private function listar($consulta) {
     $conect = new dConexion();
     $resultado = false;
 
     try {
       $con = $conect->Conectar();
-      $consulta = 'CALL ListarUsuarios()';
       $respuesta = $con->query($consulta);
 
       if ($respuesta) {

@@ -3,7 +3,7 @@
   require_once '../Negocio/usuarios/nUsuario.php';
 
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id)) {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($id)) {
     $id_usuario = trim($id);
     $nombres = trim($_POST['nombres']);
     $apellidos = trim($_POST['apellidos']);
