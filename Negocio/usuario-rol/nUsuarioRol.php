@@ -5,14 +5,14 @@ require_once '../Datos/dUsuarioRol.php';
 class nUsuarioRol {
   private $usuario_rol;
 
-  public function __construct(int $id_usuario = 0, int $id_rol = 0, $fecha_asignacion = null)
+  public function __construct(int $id_usuario = 0, int $id_rol = 0)
   {
-    $this->usuario_rol = new dUsuarioRol($id_usuario, $id_rol, $fecha_asignacion);
+    $this->usuario_rol = new dUsuarioRol($id_usuario, $id_rol);
   }
 
 
-  function crear_asignacion() {
-    return $this->usuario_rol->crear_asignacion();
+  function asignar_usuario_rol() {
+    return $this->usuario_rol->asignar_usuario_rol();
   }
 
   function listar_usuario_rol() {

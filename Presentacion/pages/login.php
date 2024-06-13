@@ -65,6 +65,6 @@
       </div>
     </div>
   </div>
-  <script src="<?= ASSETS_URL ?>/js/bootstrap.bundle.min.js"></script>
-  <script src="<?= ASSETS_URL ?>/js/pages/login.js"></script>
+  <script src="<?= ASSETS_URL ?>/js/plugins/bootstrap.bundle.min.js"></script>
+  <script src="<?= ASSETS_URL ?>/js/ajax/login.js"></script>
 </body>

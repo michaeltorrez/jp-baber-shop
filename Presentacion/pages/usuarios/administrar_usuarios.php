@@ -47,7 +47,7 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Usuarios', 'title' => 'Usuarios'));
+          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Usuarios', 'title' => 'Lista'));
         ?>
         <div class="row mt-4">
           <div class="col-12">
@@ -123,29 +123,6 @@
                       ?>
                       </tbody>
                     </table>
-
-                    <!-- Modal de confirmación de eliminación -->
-                    <div class="modal fade" id="confirmarEliminar" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="confirmarEliminarLabel">Confirmar Eliminación</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            ¿Estás seguro de que deseas eliminar este elemento?
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
                   </div>
                 </div>
 
@@ -159,6 +136,6 @@
 </div>
 
 
-<script src="<?= ASSETS_URL ?>/js/pages/usuarios.js"></script>
+<script src="<?= ASSETS_URL ?>/js/ajax/usuarios.js"></script>
 
 <?php include LAYOUT_PATH.'/footer.php' ?>

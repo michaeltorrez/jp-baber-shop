@@ -118,8 +118,8 @@
 
                     <div class="col-xl-12 mt-3">
                       <div class="d-flex gap-2 justify-content-end">
-                        <button type="button" class="btn" name="cancelar" onclick="location.href='/usuarios'">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" id="btn_submit">
+                        <button type="button" class="btn" name="cancelar" onclick="location.href='/usuarios/lista'">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
                           <?= isset($id) ? 'Editar': 'Agregar' ?>
                         </button>
                       </div>
@@ -135,5 +135,5 @@
     </div>
   </div>
 </div>
-<script src="<?= ASSETS_URL ?>/js/pages/usuarios.js"></script>
+<script src="<?= ASSETS_URL ?>/js/ajax/usuarios.js"></script>
 <?php include LAYOUT_PATH.'/footer.php' ?>

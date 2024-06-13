@@ -2,7 +2,7 @@
   require_once '../Negocio/funciones.php';
   require_once '../Negocio/roles/nRol.php';
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $descripcion = $_POST['descripcion'];
 
     $campos = [

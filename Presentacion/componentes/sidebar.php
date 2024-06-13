@@ -5,7 +5,13 @@
   $index = count($components);
   $page = $components[$index-1];
 
+
   $menuItems = [
+    [
+      'titulo' => 'Inicio',
+      'icono' => 'home',
+      'link' => '/'
+    ],
     [
       'titulo' => 'Acceso y seguridad',
       'icono' => 'security',
@@ -13,17 +19,24 @@
         [
           'titulo' => 'Usuarios',
           'link' => '/usuarios',
-          'active' => $page === 'administrarUsuarios.php'
+          'submenu' => [
+            [
+              'titulo' => 'Lista',
+              'link' => '/usuarios/lista'
+            ],
+            [
+              'titulo' => 'nuevo',
+              'link' => '/usuarios/nuevo'
+            ]
+          ]
         ],
         [
           'titulo' => 'Roles',
           'link' => '/roles',
-          'active' => $page === 'administrarRoles.php'
         ],
         [
           'titulo' => 'Usuario-rol',
           'link' => '/usuario-rol',
-          'active' => $page === 'usuario-rol.php'
         ]
       ]
     ],
@@ -33,28 +46,52 @@
       'submenu' => [
         [
           'titulo' => 'Servicios',
-          'link' => PAGES_URL.'/asignar/administrar_asignar.php',
-          'active' => $page === 'asignarRol.php'
+          'link' => '/servicios'
         ],
         [
-          'titulo' => 'Catalogo de servicios',
-          'link' => PAGES_URL.'/asignar/administrar_asignar.php',
-          'active' => $page === 'asignarRol.php'
+          'titulo' => 'Catalogo',
+          'link' => '/catalogo'
         ],
         [
           'titulo' => 'Productos',
-          'link' => PAGES_URL.'/asignar/administrar_asignar.php',
-          'active' => $page === 'asignarRol.php'
+          'link' => '/productos'
         ],
         [
           'titulo' => 'Clientes',
-          'link' => PAGES_URL.'/asignar/administrar_asignar.php',
-          'active' => $page === 'asignarRol.php'
+          'link' => '/clientes'
         ]
       ]
     ]
   ];
 
+
+  function renderMenu($items) {
+    foreach ($items as $item):
+      if (isset($item['submenu'])):
+        $id_collapse = str_replace(' ', '', $item['titulo']); ?>
+        <li class="sidebar-nav-item">
+          <a class="sidebar-link" data-bs-toggle="collapse" href="#<?= $id_collapse ?>" role="button" aria-expanded="false" aria-controls="<?= $id_collapse ?>">
+            <?php if (isset($item['icono'])): ?>
+              <span class="msr"><?= $item['icono'] ?></span>
+            <?php endif ?>
+            <span><?= $item['titulo'] ?></span>
+          </a>
+          <ul id="<?= $id_collapse ?>"class="collapse sidebar-submenu list-unstyled">
+            <?php renderMenu($item['submenu']) ?>
+          </ul>
+        </li>
+      <?php else: ?>
+        <li class="sidebar-item">
+          <a href="<?= $item['link'] ?>" class="sidebar-link me-3">
+            <?php if (isset($item['icono'])): ?>
+              <span class="msr"><?= $item['icono'] ?></span>
+            <?php endif ?>
+            <span><?= $item['titulo'] ?></span>
+          </a>
+        </li>
+      <?php endif;
+    endforeach;
+  }
 ?>
 
 <div class="app-menu">
@@ -73,62 +110,62 @@
           <span class="px-4">Menu</span>
         </li>
 
-        <?php foreach ($menuItems as $menuItem): ?>
-          <?php if (isset($menuItem['submenu'])): ?>
-              <li class="sidebar-nav-item">
-                <a class="sidebar-link" data-bs-toggle="collapse" href="#<?= str_replace(' ', '', $menuItem['titulo']) ?>" role="button" aria-expanded="false" aria-controls="<?= str_replace(' ', '', $menuItem['titulo']) ?>">
-                  <span class="msr"><?= $menuItem['icono'] ?></span>
-                  <span><?= $menuItem['titulo'] ?></span>
-                </a>
+        <?php /*foreach ($menuItems as $menuItem): ?>
+          <li class="sidebar-nav-item">
+            <?php if (isset($menuItem['submenu'])): ?>
+              <a class="sidebar-link"
+                data-bs-toggle="collapse"
+                href="#<?= str_replace(' ', '', $menuItem['titulo']) ?>"
+                role="button" aria-expanded="false"
+                aria-controls="<?= str_replace(' ', '', $menuItem['titulo']) ?>"
+              >
+                <span class="msr"><?= $menuItem['icono'] ?></span>
+                <span><?= $menuItem['titulo'] ?></span>
+              </a>
 
-                  <ul id="<?= str_replace(' ', '', $menuItem['titulo']) ?>" class="collapse sidebar-submenu list-unstyled">
-                      <?php foreach ($menuItem['submenu'] as $submenuItem): ?>
+              <ul id="<?= str_replace(' ', '', $menuItem['titulo']) ?>" class="collapse sidebar-submenu list-unstyled">
+                <?php foreach ($menuItem['submenu'] as $submenuItem): ?>
+                  <li class="sidebar-item">
+                    <?php if (isset($submenuItem['submenu'])): ?>
+                      <a class="sidebar-link"
+                        data-bs-toggle="collapse"
+                        href="#<?= str_replace(' ', '', $submenuItem['titulo']) ?>"
+                        role="button" aria-expanded="false"
+                        aria-controls="<?= str_replace(' ', '', $submenuItem['titulo']) ?>"
+                      >
+                        <span><?= $submenuItem['titulo'] ?></span>
+                      </a>
+
+                      <ul id="<?= str_replace(' ', '', $submenuItem['titulo']) ?>" class="collapse sidebar-submenu list-unstyled">
+                        <?php foreach ($submenuItem['submenu'] as $submenuItem2): ?>
                           <li class="sidebar-item">
-                              <a href="<?= $submenuItem['link'] ?>" class="<?= $submenuItem['active'] ? 'active' : '' ?> sidebar-link me-3">
-                                  <span><?= $submenuItem['titulo'] ?></span>
-                              </a>
+                            <a href="<?= $submenuItem2['link'] ?>" class="sidebar-link me-3">
+                              <span class="msr"><?= $submenuItem2['icono'] ?></span>
+                              <span><?= $submenuItem2['titulo'] ?></span>
+                            </a>
                           </li>
-                      <?php endforeach; ?>
-                  </ul>
-              </li>
-          <?php else: ?>
-              <li class="sidebar-nav-item">
-                  <a href="<?= $menuItem['link'] ?>" class="<?= $menuItem['active'] ? 'active' : '' ?> sidebar-link">
-                      <span class="msr"><?= $menuItem['icono'] ?></span>
-                      <span><?= $menuItem['titulo'] ?></span>
-                  </a>
-              </li>
-          <?php endif; ?>
-      <?php endforeach; ?>
-  
-        <!-- <li class="sidebar-nav-item">
-          <a class="sidebar-link" data-bs-toggle="collapse" href="#menuAcceso" role="button" aria-expanded="false" aria-controls="menuAcceso">
-            <span class="msr">security</span>
-            <span>Acceso y seguridad</span>
-          </a>
-  
-          <ul id="menuAcceso" class="collapse sidebar-submenu list-unstyled">
-            <li class="sidebar-item">
-              <a href="<?= PAGES_URL ?>/usuarios/administrar_usuarios.php"
-                class="<?= $page === 'administrarUsuarios.php' ? 'active' : '' ?> sidebar-link me-3">
-                <span>Usuarios</span>
+                        <?php endforeach; ?>
+                      </ul>
+
+                    <?php else: ?>
+                      <a href="<?= $submenuItem['link'] ?>" class="sidebar-link me-3">
+                        <span><?= $submenuItem['titulo'] ?></span>
+                      </a>
+                    <?php endif; ?>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            <?php else: ?>
+              <a href="<?= $menuItem['link'] ?>" class="sidebar-link">
+                <span class="msr"><?= $menuItem['icono'] ?></span>
+                <span><?= $menuItem['titulo'] ?></span>
               </a>
-            </li>
-            <li class="sidebar-nav-item">
-              <a href="<?= PAGES_URL ?>/roles/administrar_roles.php"
-                class="<?= $page === 'administrarRoles.php' ? 'active' : '' ?> sidebar-link me-3">
-                <span>Roles</span>
-              </a>
-            </li>
-  
-            <li class="sidebar-nav-item">
-              <a href="<?= PAGES_URL ?>/asignar/administrar_asignar.php"
-                class="<?= $page === 'asignarRol.php' ? 'active' : '' ?> sidebar-link me-3">
-                <span>Asignar uaurio-rol</span>
-              </a>
-            </li>
-          </ul>
-        </li> -->
+            <?php endif; ?>
+
+          </li>
+        <?php endforeach; */?>
+
+        <?php renderMenu($menuItems); ?>
   
       </ul>
     </div>

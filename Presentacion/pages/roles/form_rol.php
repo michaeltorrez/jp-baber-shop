@@ -84,6 +84,6 @@
   </div>
 </div>
 
-<script src="<?= ASSETS_URL ?>/js/pages/roles.js"></script>
+<script src="<?= ASSETS_URL ?>/js/ajax/roles.js"></script>
 
 <?php include LAYOUT_PATH.'/footer.php' ?>

@@ -52,11 +52,11 @@
           <div class="col-xl-9">
             <div class="card">
               <div class="card-body">
-                <form id="form-asignar">
+                <form id="form_asignar">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="usuario" class="form-label">Usuario</label>
+                        <label for="select_usuario" class="form-label">Usuario</label>
                           <select autofocus class="form-control" name="id_usuario" id="select_usuario" required>
                             <option value="" disabled selected hidden></option>
                             <?php
@@ -91,6 +91,6 @@
   </div>
 </div>
 
-<script src="<?= ASSETS_URL ?>/js/pages/usuario-rol.js"></script>
+<script src="<?= ASSETS_URL ?>/js/ajax/usuario_rol.js"></script>
 
 <?php include LAYOUT_PATH.'/footer.php' ?>

@@ -3,8 +3,8 @@
 // Para personalizar el mensaje de sweetAlert2
 const SwalPersonalizado = Swal.mixin({
   customClass: {
-    confirmButton: "btn btn-primary",
-    cancelButton: "btn ms-2"
+    confirmButton: "btn btn-danger me-2",
+    cancelButton: "btn"
   },
   buttonsStyling: false
 });
@@ -21,7 +21,6 @@ function eliminar_rol(id) {
     showCloseButton: true
   }).then((result) => {
     if (result.isConfirmed) {
-      console.log('asdasdasda  paso')
       fetch(`roles/eliminar/${id}`, { method: 'POST' })
       .then(response => response.json())
       .then(data => {

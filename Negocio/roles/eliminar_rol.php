@@ -2,7 +2,7 @@
   require_once '../Negocio/roles/nRol.php';
   //include_once '../Negocio/acceso.php'; soluciones esto
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $rol = new nRol($id);
     
     if ($rol->eliminar_rol()) {

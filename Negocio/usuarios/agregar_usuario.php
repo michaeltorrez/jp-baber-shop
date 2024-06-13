@@ -3,7 +3,7 @@
   require_once '../Negocio/usuarios/nUsuario.php';
 
   
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = trim($_POST['nombres']);
     $apellidos = trim($_POST['apellidos']);
     $correo = trim($_POST['correo']);

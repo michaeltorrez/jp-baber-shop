@@ -2,7 +2,7 @@
 -- TABLAS
 
 -- usarios
-CREATE TABLE db_jp_barber_shop.usuario (
+CREATE TABLE usuario (
 	id_usuario INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nombres VARCHAR(50) NOT NULL,
 	apellidos VARCHAR(50) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE db_jp_barber_shop.usuario (
 );
 
 -- roles
-CREATE TABLE db_jp_barber_shop.rol (
+CREATE TABLE rol (
 	id_rol INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	descripcion VARCHAR(50) NOT NULL UNIQUE,
 	estado INT(1) NOT NULL
@@ -21,10 +21,10 @@ CREATE TABLE db_jp_barber_shop.rol (
 
 
 -- asignar_rol
-CREATE TABLE db_jp_barber_shop.usuario_rol (
+CREATE TABLE usuario_rol (
 	id_usuario INT(10),
 	id_rol INT(10),
-	fecha_asignacion DATE,
+	fecha_asignacion DATETIME,
 	estado INT(1) NOT NULL,
 	PRIMARY KEY (id_usuario, id_rol),
 	FOREIGN KEY fk_id_usuario(id_usuario) REFERENCES usuario(id_usuario),
@@ -199,8 +199,9 @@ END;
 $$
 
 -- ======================================== USUARIO ROL ========================================
--- crear asignación
+-- asignar usuario-rol
 DELIMITER $$
+DROP PROCEDURE IF EXISTS AsignarUsuarioRol $$
 CREATE PROCEDURE AsignarUsuarioRol(IN _id_usuario INT(10), IN _id_rol INT(10))
 BEGIN
 	INSERT INTO usuario_rol (id_usuario, id_rol, fecha_asignacion, estado)
@@ -209,28 +210,16 @@ END;
 $$
 
 
--- listar asignación
-DELIMITER $$
-CREATE PROCEDURE ListarUsuarioRol()
-BEGIN
-	SELECT ur.*, u.usuario, r.descripcion FROM usuario_rol ur
-	INNER JOIN usuario u ON ur.id_usuario = u.id_usuario
-	INNER JOIN rol r ON ur.id_rol = r.id_rol
-	WHERE ur.estado = 1;
-END;
-$$
-
-
---listar usuario-rol
+-- listar usuario-rol
 DELIMITER $$
 DROP PROCEDURE IF EXISTS ListarUsuarioRol $$
 CREATE PROCEDURE ListarUsuarioRol()
 BEGIN
-	SELECT u.id_usuario, u.usuario, CONCAT(u.nombres, ' ', u.apellidos) AS nombre_completo, ur.fecha_asignacion, r.id_rol, r.descripcion
+	SELECT ur.id_usuario, ur.id_rol, ur.fecha_asignacion, u.usuario, CONCAT(u.nombres, ' ', u.apellidos) AS nombre_completo, r.descripcion
 	FROM usuario u
-	LEFT JOIN usuario_rol ur ON u.id_usuario = ur.id_usuario
-	LEFT JOIN rol r ON ur.id_rol = r.id_rol
-	WHERE u.estado = 1;
+	INNER JOIN usuario_rol ur ON u.id_usuario = ur.id_usuario
+	INNER JOIN rol r ON ur.id_rol = r.id_rol
+	WHERE ur.estado = 1;
 END;
 $$
 
@@ -240,10 +229,13 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS ListarRolesDisponibles $$
 CREATE PROCEDURE ListarRolesDisponibles(IN _id_usuario varchar(30))
 BEGIN
-	SELECT r.id_rol, r.descripcion 
-	FROM rol r
-	LEFT JOIN usuario_rol ur ON r.id_rol = ur.id_rol AND ur.id_usuario = _id_usuario
-	WHERE ur.id_rol IS NULL;
+	SELECT id_rol, descripcion
+	FROM rol
+	WHERE id_rol NOT IN (
+			SELECT id_rol
+			FROM usuario_rol
+			WHERE id_usuario = _id_usuario AND estado = 1
+	) AND estado = 1;
 END;
 $$
 
@@ -251,7 +243,7 @@ $$
 -- eliminar asignación
 DELIMITER $$
 DROP PROCEDURE IF EXISTS EliminarAsignacion $$
-CREATE PROCEDURE EliminarAsignacion(IN _id int(10), IN _id_rol int(10))
+CREATE PROCEDURE EliminarAsignacion(IN _id_usuario int(10),IN _id_rol int(10))
 BEGIN
 	UPDATE usuario_rol SET estado = 0 WHERE id_usuario = _id_usuario AND id_rol = _id_rol;
 END;

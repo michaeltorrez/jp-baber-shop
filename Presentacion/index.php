@@ -8,7 +8,7 @@ $rutas->get('/', function() {
 });
 
 // -------------------- USUARIOS --------------------
-$rutas->get('usuarios', function() {
+$rutas->get('usuarios/lista', function() {
   include './pages/usuarios/administrar_usuarios.php';
 });
 
@@ -64,13 +64,54 @@ $rutas->get('usuario-rol/asignar', function() {
   include 'pages/usuario-rol/asignar_usuario-rol.php';
 });
 
-$rutas->get('usuario-rol/nuevo', function() {
-  include 'pages/usuario-rol/asignar_usuario-rol.php';
+$rutas->post('usuario-rol/asignar', function() {
+  include '../Negocio/usuario-rol/asignar_rol.php';
 });
 
 $rutas->post('usuario-rol/roles-disponibles/:id', function($id) {
   include '../Negocio/usuario-rol/cargar_roles.php';
 });
+
+$rutas->post('usuario-rol/eliminar', function() {
+  include '../Negocio/usuario-rol/eliminar_asignacion.php';
+});
+// -----------------------------------------------------
+
+
+// --------------------- SERVICIOS ---------------------
+$rutas->get('servicios', function() {
+  include 'pages/servicios/administrar_servicios.php';
+});
+
+
+// -----------------------------------------------------
+
+
+// ---------------------- CATALOGO ----------------------
+$rutas->get('catalogo', function() {
+  include 'pages/catalogo/administrar_catalogo.php';
+});
+
+
+// -----------------------------------------------------
+
+
+// --------------------- PRODUCTOS ---------------------
+$rutas->get('productos', function() {
+  include 'pages/productos/administrar_productos.php';
+});
+
+
+// -----------------------------------------------------
+
+
+
+// ---------------------- CLIENTES ----------------------
+$rutas->get('clientes', function() {
+  include 'pages/clientes/administrar_clientes.php';
+});
+
+
 // -----------------------------------------------------
 
 $rutas->get('login', function() {

@@ -40,7 +40,7 @@ btnThemeMode.addEventListener('click', () => {
 
 document.addEventListener("DOMContentLoaded", initActiveMenu)
 
-function initActiveMenu() {
+/*function initActiveMenu() {
   var currentPath = location.pathname == "/" ? "index.html" : location.pathname.substring(1);
   currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
   if (currentPath) {
@@ -72,21 +72,65 @@ function initActiveMenu() {
       }
     }
   }
-}
+}*/
 
+/*function initActiveMenu() {
+  const currentPath = location.pathname.substring(1); // Remove leading slash
 
-export function mostrar_errores(errores) {
-  console.log('mostrar', errores)
-  // for (const campo in errores) {
-  //   if (errores.hasOwnProperty(campo)) {
-  //     const errorDiv = document.getElementById(`error-${campo}`);
-  //     if (errorDiv) {
-  //       errores[campo].forEach(error => {
-  //         const p = document.createElement('p');
-  //         p.textContent = `* ${error}`;
-  //         errorDiv.appendChild(p);
-  //       });
-  //     }
-  //   }
-  // }
+  if (currentPath) {
+    const menuItem = document.querySelector(`#side-menu a[href*="${currentPath}"]`);
+    
+    if (menuItem) {
+      menuItem.classList.add("active");
+      let parentCollapseDiv = menuItem.closest(".collapse.sidebar-submenu");
+
+      while (parentCollapseDiv) {
+        parentCollapseDiv.classList.add("show");
+        const parentLink = parentCollapseDiv.previousElementSibling;
+        
+        if (parentLink) {
+          parentLink.setAttribute("aria-expanded", "true");
+          parentLink.classList.add("active");
+        }
+
+        parentCollapseDiv = parentCollapseDiv.parentElement.closest(".collapse.sidebar-submenu");
+      }
+    }
+  }
+}*/
+
+function initActiveMenu() {
+  const currentPath = location.pathname.substring(1); // Remove leading slash
+
+  if (currentPath) {
+    const menuItem = document.querySelector(`#side-menu a[href*="${currentPath}"]`);
+
+    if (menuItem) {
+      menuItem.classList.add("active");
+
+      // Compruebe si el elemento del menú está dentro de un elemento principal contraído y, de ser así, muéstrelo
+      let parentCollapseDiv = menuItem.closest(".collapse.sidebar-submenu");
+      if (parentCollapseDiv) {
+        parentCollapseDiv.classList.add("show");
+        const parentLink = parentCollapseDiv.previousElementSibling;
+        
+        if (parentLink) {
+          parentLink.setAttribute("aria-expanded", "true");
+        }
+
+        // Repeat for any nested collapses
+        let nestedParentCollapse = parentCollapseDiv.parentElement.closest(".collapse.sidebar-submenu");
+        while (nestedParentCollapse) {
+          nestedParentCollapse.classList.add("show");
+          const nestedParentLink = nestedParentCollapse.previousElementSibling;
+          
+          if (nestedParentLink) {
+            nestedParentLink.setAttribute("aria-expanded", "true");
+          }
+
+          nestedParentCollapse = nestedParentCollapse.parentElement.closest(".collapse.sidebar-submenu");
+        }
+      }
+    }
+  }
 }

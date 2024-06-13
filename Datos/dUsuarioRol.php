@@ -7,17 +7,16 @@ class dUsuarioRol {
   //Constructor property promotion
   public function __construct(
     private int $id_usuario,
-    private int $id_rol,
-    private $fecha_asignacion
+    private int $id_rol
   ){}
 
 
-  public function crear_asignacion() {
+  public function asignar_usuario_rol() {
     $parametros = [
       ['tipo' => 'i', 'valor' => $this->id_usuario],
       ['tipo' => 'i', 'valor' => $this->id_rol]
     ];
-    return $this->ejecutarConsulta('CALL CrearAsignacion(?,?)', $parametros);
+    return $this->ejecutarConsulta('CALL AsignarUsuarioRol(?,?)', $parametros);
   }
 
 
@@ -35,8 +34,11 @@ class dUsuarioRol {
 
 
   function eliminar_asignacion() {
-    $parametros = [['tipo' => 'i', 'valor' => $this->id_usuario]];
-    return $this->ejecutarConsulta('CALL EliminarAsignacion(?)', $parametros);
+    $parametros = [
+      ['tipo' => 'i', 'valor' => $this->id_usuario],
+      ['tipo' => 'i', 'valor' => $this->id_rol]
+    ];
+    return $this->ejecutarConsulta('CALL EliminarAsignacion(?,?)', $parametros);
   }
 
 

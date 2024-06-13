@@ -1,7 +1,6 @@
 <?php
   include_once 'assets/utiles/config.php';
   include_once '../Negocio/acceso.php';
-  include_once '../Negocio/usuario-rol/funciones.php';
   include_once '../Negocio/funciones.php';
 
   // incluimos el doctype y html
@@ -10,12 +9,13 @@
 
 <head>
   <?php
-    include_archivo_con_variables(LAYOUT_PATH.'/meta.php', array('title' => 'Asignar rol'));
+    include_archivo_con_variables(LAYOUT_PATH.'/meta.php', array('title' => 'Servicios'));
     include LAYOUT_PATH.'/css.php'
   ?>
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/dataTables.bootstrap5.css">
 </head>
+
 <div class="layout-wrapper">
   <?php
     include 'componentes/topbar.php';
@@ -25,8 +25,9 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Asignar usuario-rol', 'title' => 'Asignar usuario-rol'));
+          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Servicios', 'title' => 'Catalogo'));
         ?>
+
         <div class="row mt-4">
           <div class="col-12">
             <div class="card">
@@ -34,14 +35,14 @@
                 <div class="row g-4 align-items-center">
                   <div class="col-sm">
                     <div>
-                      <h5 class="card-title mb-0">Lista de asiganciones-rol</h5>
+                      <h5 class="card-title mb-0">Lista de servicios</h5>
                     </div>
                   </div>
                   <div class="col-sm-auto">
                     <a class="btn btn-sm btn-primary" href="usuario-rol/asignar" role="button">
                       <div class="d-flex align-items-center gap-1">
                         <span class="msr">add</span>
-                        Asignar
+                        Agregar
                       </div>
                     </a>
                   </div>
@@ -64,7 +65,7 @@
                       </thead>
     
                       <tbody>
-                      <?php
+                      <?php /*
                         $asignaciones = listar_usuario_rol();
                         if ($asignaciones) {
                           $nro = 1;
@@ -79,7 +80,7 @@
                               <td class="text-center col-2"><?= $fecha ? $fecha->format('d/m/Y H:i:s'): '' ?></td>
                               <td class="text-center col-2">
                                 <div class="d-flex justify-content-center">
-                                  <button class="btn btn-sm" onclick="eliminar_asignacion(<?= $asignacion['id_usuario'] ?>, <?= $asignacion['id_rol'] ?>)">
+                                  <button class="btn btn-sm" onclick="eliminar_asignacion(<?= $asignacion['id_usuario_rol'] ?>)">
                                     <span class="msr fs-5">delete</span>
                                   </button>
                                 </div>
@@ -89,7 +90,7 @@
                             $nro = $nro + 1;
                           endforeach;
                         }
-                      ?>
+                      */ ?>
                       </tbody>
                     </table>
                   </div>
@@ -103,8 +104,5 @@
     </div>
   </div>
 </div>
-
-
-<script src="<?= ASSETS_URL ?>/js/ajax/usuario_rol.js"></script>
 
 <?php include LAYOUT_PATH.'/footer.php' ?>
