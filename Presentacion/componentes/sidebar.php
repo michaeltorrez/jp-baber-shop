@@ -101,35 +101,6 @@
     endforeach;
   }
 
-
-
-  function renderMenu2($items) {
-    foreach ($items as $item):
-      if (isset($item['submenu'])):
-        $id_collapse = str_replace(' ', '', $item['titulo']); ?>
-        <li class="sidebar-nav-item">
-          <a class="sidebar-link" data-bs-toggle="collapse" href="#<?= $id_collapse ?>" role="button" aria-expanded="false" aria-controls="<?= $id_collapse ?>">
-            <?php if (isset($item['icono'])): ?>
-              <span class="msr"><?= $item['icono'] ?></span>
-            <?php endif ?>
-            <span><?= $item['titulo'] ?></span>
-          </a>
-          <ul id="<?= $id_collapse ?>"class="collapse sidebar-submenu list-unstyled">
-            <?php renderMenu($item['submenu']) ?>
-          </ul>
-        </li>
-      <?php else: ?>
-        <li class="sidebar-item">
-          <a href="<?= $item['link'] ?>" class="sidebar-link me-3">
-            <?php if (isset($item['icono'])): ?>
-              <span class="msr"><?= $item['icono'] ?></span>
-            <?php endif ?>
-            <span><?= $item['titulo'] ?></span>
-          </a>
-        </li>
-      <?php endif;
-    endforeach;
-  }
 ?>
 
 <div class="app-menu">
