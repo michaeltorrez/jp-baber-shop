@@ -9,7 +9,7 @@ const swalWithBootstrapButtons = Swal.mixin({
 });
 
 
-function eliminar_usuario(id) {
+function eliminar_usuario(id_usuario) {
   swalWithBootstrapButtons.fire({
     title: "¿Estás seguro?",
     text: "¡No podrás revertir esto!",
@@ -21,8 +21,9 @@ function eliminar_usuario(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       var formdata = new FormData();
-      formdata.append('id', id);
-      fetch(`usuarios/eliminar/${id}`, { method: 'POST', body: formdata })
+      formdata.append('id_usuario', id_usuario);
+      
+      fetch('/usuarios/eliminar', { method: 'POST', body: formdata })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -30,7 +31,7 @@ function eliminar_usuario(id) {
             title: "¡Eliminado!",
             text: "El usuario ha sido eliminado.",
             icon: "success",
-          }).then(() => location.reload())
+          }).then(() => window.location.href = '/usuarios')
         }
       })
     }
@@ -71,7 +72,7 @@ async function nuevo_usuario(event) {
         confirmButtonText: 'Aceptar'
       }).then(() => {
         // Redireccionamos a la lista de usuarios
-        window.location.href = '/usuarios'
+        window.location.href = '/usuario-rol/asignar'
       })
     } else if (data.errores) {
       // Mostrar errores debajo de los campos correspondientes

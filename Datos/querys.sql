@@ -227,14 +227,14 @@ $$
 -- listar roles no asignados a un usuario
 DELIMITER $$
 DROP PROCEDURE IF EXISTS ListarRolesDisponibles $$
-CREATE PROCEDURE ListarRolesDisponibles(IN _id_usuario varchar(30))
+CREATE PROCEDURE ListarRolesDisponibles(IN _id_usuario int(10),IN _id_rol int(10))
 BEGIN
 	SELECT id_rol, descripcion
 	FROM rol
 	WHERE id_rol NOT IN (
 			SELECT id_rol
 			FROM usuario_rol
-			WHERE id_usuario = _id_usuario AND estado = 1
+			WHERE id_usuario = _id_usuario AND id_rol = _id_rol AND estado = 1
 	) AND estado = 1;
 END;
 $$

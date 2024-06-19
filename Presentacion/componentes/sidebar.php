@@ -17,26 +17,16 @@
       'icono' => 'security',
       'submenu' => [
         [
-          'titulo' => 'Usuarios',
-          'link' => '/usuarios',
-          'submenu' => [
-            [
-              'titulo' => 'Lista',
-              'link' => '/usuarios/lista'
-            ],
-            [
-              'titulo' => 'nuevo',
-              'link' => '/usuarios/nuevo'
-            ]
-          ]
+          'titulo' => 'Administrar usuarios',
+          'link' => '/usuarios'
         ],
         [
           'titulo' => 'Roles',
-          'link' => '/roles',
+          'link' => '/roles'
         ],
         [
           'titulo' => 'Usuario-rol',
-          'link' => '/usuario-rol',
+          'link' => '/usuario-rol'
         ]
       ]
     ],
@@ -49,12 +39,12 @@
           'link' => '/servicios'
         ],
         [
-          'titulo' => 'Catalogo',
-          'link' => '/catalogo'
-        ],
-        [
           'titulo' => 'Productos',
           'link' => '/productos'
+        ],
+        [
+          'titulo' => 'Catalogo',
+          'link' => '/catalogo'
         ],
         [
           'titulo' => 'Clientes',
@@ -65,7 +55,55 @@
   ];
 
 
-  function renderMenu($items) {
+  function renderMenu($items, $currentPath) {
+    foreach ($items as $item):
+      $isActive = '';
+      $isSubmenuActive = '';
+
+      
+      if (isset($item['submenu'])) {
+        foreach ($item['submenu'] as $submenuItem) {
+          if (strpos($currentPath, $submenuItem['link']) === 0) {
+            $isActive = 'active';
+            $isSubmenuActive = 'show';
+            break;
+          }
+        }
+      } else {
+        if ($currentPath === $item['link']) {
+          $isActive = 'active';
+        }
+      }
+
+      if (isset($item['submenu'])):
+        $id_collapse = str_replace(' ', '', $item['titulo']); ?>
+        <li class="sidebar-nav-item <?= $isActive ?>">
+          <a class="sidebar-link" data-bs-toggle="collapse" href="#<?= $id_collapse ?>" role="button" aria-expanded="false" aria-controls="<?= $id_collapse ?>">
+            <?php if (isset($item['icono'])): ?>
+              <span class="msr"><?= $item['icono'] ?></span>
+            <?php endif ?>
+            <span><?= $item['titulo'] ?></span>
+          </a>
+          <ul id="<?= $id_collapse ?>" class="collapse sidebar-submenu list-unstyled <?= $isSubmenuActive ?>">
+            <?php renderMenu($item['submenu'], $currentPath) ?>
+          </ul>
+        </li>
+      <?php else: ?>
+        <li class="sidebar-item <?= $isActive ?>">
+          <a href="<?= $item['link'] ?>" class="sidebar-link me-3">
+            <?php if (isset($item['icono'])): ?>
+              <span class="msr"><?= $item['icono'] ?></span>
+            <?php endif ?>
+            <span><?= $item['titulo'] ?></span>
+          </a>
+        </li>
+      <?php endif;
+    endforeach;
+  }
+
+
+
+  function renderMenu2($items) {
     foreach ($items as $item):
       if (isset($item['submenu'])):
         $id_collapse = str_replace(' ', '', $item['titulo']); ?>
@@ -165,7 +203,7 @@
           </li>
         <?php endforeach; */?>
 
-        <?php renderMenu($menuItems); ?>
+        <?php renderMenu($menuItems, $path); ?>
   
       </ul>
     </div>

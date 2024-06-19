@@ -4,16 +4,16 @@ require_once '../Negocio/Router.php';
 $rutas = new Router();
 
 $rutas->get('/', function() {
-  include 'pages/inicio.php';
+  include 'paginas/inicio.php';
 });
 
 // -------------------- USUARIOS --------------------
-$rutas->get('usuarios/lista', function() {
-  include './pages/usuarios/administrar_usuarios.php';
+$rutas->get('usuarios/', function() {
+  include 'paginas/usuarios/administrar_usuarios.php';
 });
 
 $rutas->get('usuarios/nuevo', function() {
-  include 'pages/usuarios/form_usuario.php';
+  include 'paginas/usuarios/form_usuario.php';
 });
 
 $rutas->post('usuarios/nuevo', function() {
@@ -21,24 +21,24 @@ $rutas->post('usuarios/nuevo', function() {
 });
 
 $rutas->get('usuarios/editar/:id', function($id) {
-  include 'pages/usuarios/form_usuario.php';
+  include 'paginas/usuarios/form_usuario.php';
 });
 
 $rutas->post('usuarios/editar/:id', function($id) {
   include '../Negocio/usuarios/editar_usuario.php';
 });
 
-$rutas->post('usuarios/eliminar/:id', function($id) {
+$rutas->post('usuarios/eliminar', function() {
   include '../Negocio/usuarios/eliminar_usuario.php';
 });
 
 // ---------------------- ROLES ----------------------
-$rutas->get('roles', function() {
-  include 'pages/roles/administrar_roles.php';
+$rutas->get('roles/', function() {
+  include 'paginas/roles/administrar_roles.php';
 });
 
 $rutas->get('roles/nuevo', function() {
-  include 'pages/roles/form_rol.php';
+  include 'paginas/roles/form_rol.php';
 });
 
 $rutas->post('roles/nuevo', function() {
@@ -56,12 +56,12 @@ $rutas->post('roles/eliminar/:id', function($id) {
 
 
 // -------------------- USUARIO-ROL --------------------
-$rutas->get('usuario-rol', function() {
-  include 'pages/usuario-rol/administrar_usuario-rol.php';
+$rutas->get('usuario-rol/', function() {
+  include 'paginas/usuario-rol/administrar_usuario-rol.php';
 });
 
 $rutas->get('usuario-rol/asignar', function() {
-  include 'pages/usuario-rol/asignar_usuario-rol.php';
+  include 'paginas/usuario-rol/asignar_usuario-rol.php';
 });
 
 $rutas->post('usuario-rol/asignar', function() {
@@ -80,7 +80,7 @@ $rutas->post('usuario-rol/eliminar', function() {
 
 // --------------------- SERVICIOS ---------------------
 $rutas->get('servicios', function() {
-  include 'pages/servicios/administrar_servicios.php';
+  include 'paginas/servicios/administrar_servicios.php';
 });
 
 
@@ -89,7 +89,7 @@ $rutas->get('servicios', function() {
 
 // ---------------------- CATALOGO ----------------------
 $rutas->get('catalogo', function() {
-  include 'pages/catalogo/administrar_catalogo.php';
+  include 'paginas/catalogo/administrar_catalogo.php';
 });
 
 
@@ -98,7 +98,7 @@ $rutas->get('catalogo', function() {
 
 // --------------------- PRODUCTOS ---------------------
 $rutas->get('productos', function() {
-  include 'pages/productos/administrar_productos.php';
+  include 'paginas/productos/administrar_productos.php';
 });
 
 
@@ -108,14 +108,14 @@ $rutas->get('productos', function() {
 
 // ---------------------- CLIENTES ----------------------
 $rutas->get('clientes', function() {
-  include 'pages/clientes/administrar_clientes.php';
+  include 'paginas/clientes/administrar_clientes.php';
 });
 
 
 // -----------------------------------------------------
 
 $rutas->get('login', function() {
-  include 'pages/login.php';
+  include 'paginas/login.php';
 });
 
 $rutas->post('login', function() {
