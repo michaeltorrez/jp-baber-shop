@@ -103,7 +103,7 @@ function nuevo_item(data) {
     return;
   }
 
-  data.cantidad = 1
+  data.cantidad = '1'
   detalles.push(data)
   const fila = document.createElement('tr');
   fila.id = `item-${contador}`;

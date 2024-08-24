@@ -77,6 +77,7 @@ class dVenta {
     id_producto, cantidad, precio */
     extract($detalle);
     $subtotal = $cantidad * $precio;
+    
     if (isset($id_producto)) {
       $stmt = $con->prepare('CALL AgregarDetalleVentaProducto(?,?,?,?)');
       $stmt->bind_param('iiid', $this->id_venta, $id_producto, $cantidad, $subtotal);

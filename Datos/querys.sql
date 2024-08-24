@@ -644,7 +644,7 @@ CREATE PROCEDURE AgregarDetalleVentaServicio(
 	IN _subtotal DECIMAL(10,2)
 )
 BEGIN
-	INSERT INTO detalle_venta_servicio (id_venta, id_producto, cantidad, subtotal, estado)
+	INSERT INTO detalle_venta_servicio (id_venta, id_servicio, cantidad, subtotal, estado)
 	VALUES (_id_venta, _id_servicio, _cantidad, _subtotal, 1);
 END $$
 DELIMITER ;
