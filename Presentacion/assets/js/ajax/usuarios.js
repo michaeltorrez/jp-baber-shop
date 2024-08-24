@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
   pathname = window.location.pathname
   if (pathname === '/usuarios') {
     document.getElementById("dt-search-0").focus()
-  } else if (pathname === '/usuarios/nuevo' || pathname.startsWith('/usuarios/editar/')) {
+  } else if (pathname === '/usuarios/agregar' || pathname.startsWith('/usuarios/editar/')) {
     const form_usuario = document.getElementById('form_usuario');
     form_usuario.addEventListener('submit', (event) => nuevo_usuario(event))
   } 
@@ -51,14 +51,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-async function nuevo_usuario(event) {
+function nuevo_usuario(event) {
   event.preventDefault()
   const datos = new FormData(form_usuario)
   let id_usuario = datos.get('id_usuario')
-  const url = id_usuario ? `/usuarios/editar/${id_usuario}`: '/usuarios/nuevo'
+  const url = id_usuario ? `/usuarios/editar/${id_usuario}`: '/usuarios/agregar'
 
   // Limpiar mensajes de error anteriores
-  document.querySelectorAll('.text-danger').forEach(el => el.textContent = '');
+  document.querySelectorAll('.text-danger').forEach(el => el.textContent = '')
   
   fetch(url, { method: 'POST', body: datos })
   .then( response => response.json())
@@ -72,7 +72,7 @@ async function nuevo_usuario(event) {
         confirmButtonText: 'Aceptar'
       }).then(() => {
         // Redireccionamos a la lista de usuarios
-        window.location.href = '/usuario-rol/asignar'
+        window.location.href = '/usuarios'
       })
     } else if (data.errores) {
       // Mostrar errores debajo de los campos correspondientes

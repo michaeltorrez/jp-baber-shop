@@ -2,6 +2,14 @@
   include_once 'assets/utiles/config.php';
   include_once '../Negocio/acceso.php';
   include_once '../Negocio/funciones.php';
+  include_once '../Negocio/servicios/nServicio.php';
+
+  function listar_servicios() {
+    $pro = new nServicio();
+    return $pro->listar_servicios();
+  }
+  
+  $servicios = listar_servicios();
 
   // incluimos el doctype y html
   include_once LAYOUT_PATH.'/main.php';
@@ -25,25 +33,17 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Servicios', 'title' => 'Servicios'));
+          include_archivo_con_variables('componentes/breadcrumb.php', array('pagetitle' => 'Servicios'));
         ?>
 
-        <div class="row mt-4">
+        <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header py-3">
-                <div class="row g-4 align-items-center">
-                  <div class="col-sm">
-                    <div>
-                      <h5 class="card-title mb-0">Lista de servicios</h5>
-                    </div>
-                  </div>
-                  <div class="col-sm-auto">
-                    <a class="btn btn-sm btn-primary" href="usuario-rol/asignar" role="button">
-                      <div class="d-flex align-items-center gap-1">
-                        <span class="msr">add</span>
-                        Agregar
-                      </div>
+              <div class="card-header">
+                <div class="row justify-content-between">
+                  <div class="col-md-6 mb-3">
+                    <a class="btn btn-primary" href="servicios/agregar" role="button">
+                      + Agregar servicio
                     </a>
                   </div>
                 </div>
@@ -55,42 +55,46 @@
                     <table id="datatable" class="table table-hover align-middle">
                       <thead class="table-light text-muted">
                         <tr>
-                          <th class="text-center">#</th>
-                          <th class="text-center">Usuario</th>
-                          <th class="text-center">Nombre completo</th>
-                          <th class="text-center">Rol</th>
-                          <th class="text-center">Fecha de asignación</th>
+                          <th class="text-center">Servicio</th>
+                          <!-- <th class="text-center">Nombre</th> -->
+                          <th class="text-center">Descripcion</th>
+                          <th class="text-center">Precio</th>
                           <th class="text-center">Acciones</th>
                         </tr>
                       </thead>
     
                       <tbody>
-                      <?php /*
-                        $asignaciones = listar_usuario_rol();
-                        if ($asignaciones) {
-                          $nro = 1;
-                          foreach($asignaciones as $asignacion) : 
-                            $fecha = $asignacion['fecha_asignacion'] ? new DateTime($asignacion['fecha_asignacion']): null;
-                          ?>
-                            <tr>
-                              <td class="text-center col-1"><?= $nro ?></td>
-                              <td class="text-left col-2"><?= $asignacion['usuario'] ?></td>
-                              <td class="text-left col-3"><?= $asignacion['nombre_completo'] ?></td>
-                              <td class="text-left col-2"><?= $asignacion['descripcion'] ?></td>
-                              <td class="text-center col-2"><?= $fecha ? $fecha->format('d/m/Y H:i:s'): '' ?></td>
-                              <td class="text-center col-2">
-                                <div class="d-flex justify-content-center">
-                                  <button class="btn btn-sm" onclick="eliminar_asignacion(<?= $asignacion['id_usuario_rol'] ?>)">
-                                    <span class="msr fs-5">delete</span>
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                      <?php
-                            $nro = $nro + 1;
-                          endforeach;
-                        }
-                      */ ?>
+                        <?php
+                          if ($servicios) {
+                            foreach($servicios as $servicio) : ?>
+                              <tr>
+                                <td class="text-left col-3">
+                                  <div class="d-flex align-items-center">
+                                    <?php if ($servicio['imagen'] === 'sin_imagen.png') : ?>
+                                      <img class="rounded-3" src="/assets/images/<?= $servicio['imagen'] ?>" alt height="64" width="64">
+                                    <?php else : ?>
+                                      <img class="rounded-3" src="/uploads/<?= $servicio['imagen'] ?>" alt height="64" width="64">
+                                    <?php endif; ?>
+                                    <p class="ms-3 fw-semibold"><?= $servicio['nombre'] ?></p>
+                                  </div>
+                                </td>
+                                <!-- <td class="text-left col-2"><?= $servicio['nombre'] ?></td> -->
+                                <td class="text-left"><?= $servicio['descripcion'] ?></td>
+                                <td class="text-left col-1"><?= $servicio['precio'] ?></td>
+                                <td class="text-center col-1">
+                                  <div class="d-flex justify-content-center">
+                                    <a class="btn btn-sm" href="/servicios/editar/<?= $servicio['id_servicio'] ?>" role="button">
+                                      <span class="msr fs-5">edit</span>
+                                    </a>
+
+                                    <button class="btn btn-sm" onclick="eliminar_servicio(<?= $servicio['id_servicio'] ?>)">
+                                      <span class="msr fs-5">delete</span>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                          <?php endforeach;}
+                        ?>
                       </tbody>
                     </table>
                   </div>
@@ -105,4 +109,5 @@
   </div>
 </div>
 
+<script src="<?= ASSETS_URL ?>/js/ajax/servicios.js"></script>
 <?php include LAYOUT_PATH.'/footer.php' ?>

@@ -25,7 +25,7 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Servicios', 'title' => 'Catalogo'));
+          include_archivo_con_variables('componentes/breadcrumb.php', array('pagetitle' => 'Catalogo'));
         ?>
 
         <div class="row mt-4">

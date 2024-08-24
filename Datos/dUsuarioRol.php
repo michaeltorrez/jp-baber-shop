@@ -41,6 +41,29 @@ class dUsuarioRol {
     return $this->ejecutarConsulta('CALL EliminarAsignacion(?,?)', $parametros);
   }
 
+  function existe_asignacion() {
+    $conect = new dConexion();
+    $resultado = false;
+
+    try {
+      $con = $conect->Conectar();
+      $consulta = 'CALL ExisteUsuarioRol(?,?)';
+      $stmt = $con->prepare($consulta);
+      $stmt->bind_param('ii', $this->id_usuario, $this->id_rol);
+      $respuesta = $stmt->execute();
+
+      if ($respuesta) {
+        $resultado = $stmt->get_result();
+      }
+      $stmt->close();
+      $con->close();
+    } catch (Exception $exc) {
+      $exc->getTraceAsString();
+    }
+
+    return $resultado;
+  }
+
 
 
   function ejecutarConsulta(string $consulta, array $parametros = []): bool {

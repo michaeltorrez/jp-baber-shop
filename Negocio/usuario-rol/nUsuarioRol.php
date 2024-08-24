@@ -28,4 +28,8 @@ class nUsuarioRol {
     return $this->usuario_rol->eliminar_asignacion();
   }
 
+  function existe_asignacion() {
+    return $this->usuario_rol->existe_asignacion();
+  }
+
 }

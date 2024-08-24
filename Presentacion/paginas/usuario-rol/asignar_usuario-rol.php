@@ -45,10 +45,10 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Nueva asignacion', 'title' => 'Nueva asignacion'));
+          include_archivo_con_variables('componentes/breadcrumb.php', array('pagetitle' => 'Nueva asignacion'));
         ?>
 
-        <div class="row mt-4">
+        <div class="row">
           <div class="col-xl-9">
             <div class="card">
               <div class="card-body">
@@ -57,7 +57,7 @@
                     <div class="col-lg-6">
                       <div class="mb-3">
                         <label for="select_usuario" class="form-label">Usuario</label>
-                          <select autofocus class="form-control" name="id_usuario" id="select_usuario" required>
+                          <select autofocus class="form-select" name="id_usuario" id="select_usuario">
                             <option value="" disabled selected hidden></option>
                             <?php
                               foreach ($usuarios as $usuario) : ?>
@@ -68,7 +68,7 @@
 
                       <div class="mb-3">
                         <label for="rol" class="form-label">Rol</label>
-                          <select class="form-control" name="id_rol" id="rol" required></select>
+                        <select class="form-select" name="id_rol" id="rol"></select>
                       </div>
                     </div>
 

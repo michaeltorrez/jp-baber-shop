@@ -1,4 +1,10 @@
 @font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 100 800;
+  src: url("../fonts/NunitoSans.ttf") format("ttf");
+}
+@font-face {
   font-family: "Material Symbols Rounded";
   font-style: normal;
   font-weight: 100 700;
@@ -23,8 +29,8 @@
 /*$success:       $green;
 $info:          $cyan;*/
 /*$box-shadow-sm:               0 .125rem .25rem rgba($black, .075);
-$box-shadow-inset:            inset 0 1px 2px rgba($black, .075);
 $element-shadow:              $box-shadow;*/
+/* SELECT */
 /*$top-tagbar-bg-dark: $blue-600;
 $topbar-search-bg-dark: $gray-800;*/
 #page-topbar {
@@ -32,7 +38,7 @@ $topbar-search-bg-dark: $gray-800;*/
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1054;
+  z-index: 999;
   background-color: var(--jp-header-bg);
   border-bottom: 1px solid var(--jp-header-border);
   transition: all 0.1s ease-out;
@@ -52,8 +58,54 @@ $topbar-search-bg-dark: $gray-800;*/
 }
 
 .page-content {
-  padding: calc(70px + 1.5rem) calc(1.5rem * 0.75) 60px calc(1.5rem * 0.75);
+  /*padding: calc(70px + 1.5rem) calc(1.5rem * 0.75) $footer-height calc(1.5rem * 0.75);*/
+  min-height: calc(100vh - 70px);
+  margin-top: 70px;
+  padding: 0 15px 0 15px;
+  position: relative;
+  transition: 0.5s;
 }
+
+/* agregar al sas */
+
+.img-sm {
+  width: 4rem;
+}
+
+h5 {
+  font-size: .875rem;
+}
+
+.avatar-md {
+  height: 72px;
+  width: 72px;
+}
+
+.input-group {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+  .form-input {
+    width: 2rem;
+  }
+}
+
+.table-centered td,.table-centered th {
+  vertical-align: middle!important
+}
+
+.table-card {
+  margin: -1.25rem;
+}
+
+
+.input-spinner {
+  width: 110px;
+}
+
+/* -------- */
 
 .header-item {
   height: 70px;
@@ -163,6 +215,7 @@ html[data-bs-theme=dark] .layout-mode-light {
   padding: 0 1.3rem;
   text-align: center;
   transition: all 0.1s ease-out;
+  box-shadow: -9px 0 20px rgba(89, 102, 122, 0.1);
 }
 .navbar-brand-box a {
   color: var(--jp-body-color);
@@ -269,6 +322,10 @@ html[data-bs-theme=dark] .layout-mode-light {
   --jp-table-hover-color: white;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
 a {
   text-decoration: none !important;
 }
@@ -309,6 +366,35 @@ b, strong {
   padding-right: 16px;
 }
 
+.page-title {
+  padding: 15px 30px;
+  margin: 0 -30px 0px;
+  /*background-color: #fff;*/
+  color: var(--jp-sidebar-menu-item-color);
+}
+.page-title h2 {
+  font-weight: 700;
+}
+.page-title .row {
+  align-items: center;
+}
+.page-title .row .breadcrumb {
+  background-color: transparent;
+  padding: 0;
+  margin-bottom: 0;
+  align-items: center;
+  justify-content: flex-end;
+}
+.page-title .row .breadcrumb li {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.page-title .row .breadcrumb .breadcrumb-item a span.msr {
+  display: inline-block;
+  font-size: 18px;
+  line-height: inherit;
+}
+
 .avatar-xs {
   height: 2rem;
   width: 2rem;
@@ -332,21 +418,40 @@ b, strong {
   color: var(--jp-body-color);
 }
 
+.dropzone {
+  min-height: 230px;
+  border: 2px dashed var(--jp-border-color);
+  background: var(--jp-secondary-bg);
+  border-radius: 6px;
+}
+.dropzone .dz-message {
+  font-size: 24px;
+  width: 100%;
+  margin: 1em 0;
+}
+
 .login-bg {
   background-image: url("../images/login-bg.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  display: block;
   border-right: 1px solid var(--jp-gray-700);
-}
-@media (min-width: 768px) {
-  .login-bg {
-    height: 100vh;
-  }
 }
 
 .login-page-content {
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 30px 12px;
+}
+
+.login-main {
+  width: 450px;
+  padding: 40px;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=app.css.map */

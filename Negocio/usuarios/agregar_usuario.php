@@ -29,15 +29,15 @@
       ],
       'correo' => [
         'valor' => $correo,
-        'validaciones' => validaciones_predefinidas('correo'),
+        'validaciones' => validaciones_predefinidas(ValidacionTipo::CORREO),
       ],
       'usuario' => [
         'valor' => $usuario,
-        'validaciones' => validaciones_predefinidas('usuario'),
+        'validaciones' => validaciones_predefinidas(ValidacionTipo::USUARIO),
       ],
       'contrasena' => [
         'valor' => $contrasena,
-        'validaciones' => validaciones_predefinidas('contrasena'),
+        'validaciones' => validaciones_predefinidas(ValidacionTipo::CONTRASENA),
       ]
     ];
     

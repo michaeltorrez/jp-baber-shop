@@ -10,11 +10,17 @@
     // instanciamos una variable de tipo nUsuarioRol para poder usar sus metodos
     $usurio_rol = new nUsuarioRol($id_usuario, $id_rol);
     // ejecutamos el metodo para asignar rol al usuario, el cual nos devuelve si tuvo o no exito
-    if ($usurio_rol->asignar_usuario_rol()) {
-      // en caso de que todo haya salido bien devolvemos un json con el mensaje de exito
-      echo json_encode(['success' => 'Rol asignado correctamente']);
+
+    if (!$usurio_rol->existe_asignacion()) {
+      if ($usurio_rol->asignar_usuario_rol()) {
+        // en caso de que todo haya salido bien devolvemos un json con el mensaje de exito
+        echo json_encode(['success' => 'Rol asignado correctamente']);
+      } else {
+        echo json_encode(['success' => $usurio_rol ]);
+      }
     } else {
-      echo json_encode(['success' => $usurio_rol ]);
+      echo json_encode(['error' => 'asdasd' ]);
     }
+
 
   }

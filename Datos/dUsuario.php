@@ -1,4 +1,6 @@
 <?php
+
+use Datos\dConexion;
 require_once 'dConexion.php';
 
 class dUsuario {
@@ -11,15 +13,6 @@ class dUsuario {
     private $usuario,
     private $contrasena
   ) {}
-
-/*
-  function getCorreo() {
-    return $this->correo;
-  }
-
-  function getNombre_usuario() {
-    return $this->usuario;
-  }*/
 
 
   function crear_usuario() {

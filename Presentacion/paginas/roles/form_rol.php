@@ -45,10 +45,10 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Nuevo rol', 'title' => 'Nuevo rol'));
+          include_archivo_con_variables('componentes/breadcrumb.php', array('pagetitle' => 'Nuevo rol', 'title' => 'Nuevo rol'));
         ?>
 
-        <div class="row mt-4">
+        <div class="row">
           <div class="col-xl-9">
             <div class="card">
               <div class="card-body">

@@ -1,10 +1,9 @@
 <?php
   $directoryURI = $_SERVER['REQUEST_URI'];
-  $path = parse_url($directoryURI, PHP_URL_PATH);
-  $components = explode('/', $path);
-  $index = count($components);
-  $page = $components[$index-1];
-
+  // $path = parse_url($directoryURI, PHP_URL_PATH);
+  // $components = explode('/', $path);
+  // $index = count($components);
+  // $page = $components[1];
 
   $menuItems = [
     [
@@ -21,7 +20,7 @@
           'link' => '/usuarios'
         ],
         [
-          'titulo' => 'Roles',
+          'titulo' => 'Administrar roles',
           'link' => '/roles'
         ],
         [
@@ -49,6 +48,24 @@
         [
           'titulo' => 'Clientes',
           'link' => '/clientes'
+        ],
+        [
+          'titulo' => 'Promosiones',
+          'link' => '/promociones'
+        ]
+      ]
+    ],
+    [
+      'titulo' => 'Transaccionales',
+      'icono' => 'sync_alt',
+      'submenu' => [
+        [
+          'titulo' => 'Ventas',
+          'link' => '/ventas'
+        ],
+        [
+          'titulo' => 'Compra',
+          'link' => '/compra'
         ]
       ]
     ]
@@ -56,40 +73,23 @@
 
 
   function renderMenu($items, $currentPath) {
+    // recorremos los items del menu
     foreach ($items as $item):
-      $isActive = '';
-      $isSubmenuActive = '';
-
-      
-      if (isset($item['submenu'])) {
-        foreach ($item['submenu'] as $submenuItem) {
-          if (strpos($currentPath, $submenuItem['link']) === 0) {
-            $isActive = 'active';
-            $isSubmenuActive = 'show';
-            break;
-          }
-        }
-      } else {
-        if ($currentPath === $item['link']) {
-          $isActive = 'active';
-        }
-      }
-
       if (isset($item['submenu'])):
         $id_collapse = str_replace(' ', '', $item['titulo']); ?>
-        <li class="sidebar-nav-item <?= $isActive ?>">
+        <li class="sidebar-nav-item">
           <a class="sidebar-link" data-bs-toggle="collapse" href="#<?= $id_collapse ?>" role="button" aria-expanded="false" aria-controls="<?= $id_collapse ?>">
             <?php if (isset($item['icono'])): ?>
               <span class="msr"><?= $item['icono'] ?></span>
             <?php endif ?>
             <span><?= $item['titulo'] ?></span>
           </a>
-          <ul id="<?= $id_collapse ?>" class="collapse sidebar-submenu list-unstyled <?= $isSubmenuActive ?>">
+          <ul id="<?= $id_collapse ?>" class="collapse sidebar-submenu list-unstyled">
             <?php renderMenu($item['submenu'], $currentPath) ?>
           </ul>
         </li>
       <?php else: ?>
-        <li class="sidebar-item <?= $isActive ?>">
+        <li class="sidebar-item">
           <a href="<?= $item['link'] ?>" class="sidebar-link me-3">
             <?php if (isset($item['icono'])): ?>
               <span class="msr"><?= $item['icono'] ?></span>
@@ -100,7 +100,6 @@
       <?php endif;
     endforeach;
   }
-
 ?>
 
 <div class="app-menu">
@@ -112,69 +111,13 @@
   </div>
 
   <!-- MENU -->
-  <div id="scrollbar">
+  <div id="scrollbar" class="h-100">
     <div class="container-fluid p-0">
       <ul id="side-menu" class="sidebar-nav list-unstyled">
         <li class="menu-title">
           <span class="px-4">Menu</span>
         </li>
-
-        <?php /*foreach ($menuItems as $menuItem): ?>
-          <li class="sidebar-nav-item">
-            <?php if (isset($menuItem['submenu'])): ?>
-              <a class="sidebar-link"
-                data-bs-toggle="collapse"
-                href="#<?= str_replace(' ', '', $menuItem['titulo']) ?>"
-                role="button" aria-expanded="false"
-                aria-controls="<?= str_replace(' ', '', $menuItem['titulo']) ?>"
-              >
-                <span class="msr"><?= $menuItem['icono'] ?></span>
-                <span><?= $menuItem['titulo'] ?></span>
-              </a>
-
-              <ul id="<?= str_replace(' ', '', $menuItem['titulo']) ?>" class="collapse sidebar-submenu list-unstyled">
-                <?php foreach ($menuItem['submenu'] as $submenuItem): ?>
-                  <li class="sidebar-item">
-                    <?php if (isset($submenuItem['submenu'])): ?>
-                      <a class="sidebar-link"
-                        data-bs-toggle="collapse"
-                        href="#<?= str_replace(' ', '', $submenuItem['titulo']) ?>"
-                        role="button" aria-expanded="false"
-                        aria-controls="<?= str_replace(' ', '', $submenuItem['titulo']) ?>"
-                      >
-                        <span><?= $submenuItem['titulo'] ?></span>
-                      </a>
-
-                      <ul id="<?= str_replace(' ', '', $submenuItem['titulo']) ?>" class="collapse sidebar-submenu list-unstyled">
-                        <?php foreach ($submenuItem['submenu'] as $submenuItem2): ?>
-                          <li class="sidebar-item">
-                            <a href="<?= $submenuItem2['link'] ?>" class="sidebar-link me-3">
-                              <span class="msr"><?= $submenuItem2['icono'] ?></span>
-                              <span><?= $submenuItem2['titulo'] ?></span>
-                            </a>
-                          </li>
-                        <?php endforeach; ?>
-                      </ul>
-
-                    <?php else: ?>
-                      <a href="<?= $submenuItem['link'] ?>" class="sidebar-link me-3">
-                        <span><?= $submenuItem['titulo'] ?></span>
-                      </a>
-                    <?php endif; ?>
-                  </li>
-                <?php endforeach; ?>
-              </ul>
-            <?php else: ?>
-              <a href="<?= $menuItem['link'] ?>" class="sidebar-link">
-                <span class="msr"><?= $menuItem['icono'] ?></span>
-                <span><?= $menuItem['titulo'] ?></span>
-              </a>
-            <?php endif; ?>
-
-          </li>
-        <?php endforeach; */?>
-
-        <?php renderMenu($menuItems, $path); ?>
+        <?php renderMenu($menuItems, $directoryURI); ?>
   
       </ul>
     </div>

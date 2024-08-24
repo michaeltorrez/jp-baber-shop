@@ -47,24 +47,16 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables(LAYOUT_PATH.'/page-title.php', array('pagetitle' => 'Usuarios', 'title' => 'Lista'));
+          include_archivo_con_variables('componentes/breadcrumb.php', array('pagetitle' => 'Usuarios', 'title' => 'Lista'));
         ?>
-        <div class="row mt-4">
+        <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header py-3">
-                <div class="row g-4 align-items-center">
-                  <div class="col-sm">
-                    <div>
-                      <h5 class="card-title mb-0">Lista de usuarios</h5>
-                    </div>
-                  </div>
-                  <div class="col-sm-auto">
-                    <a class="btn btn-sm btn-primary" href="/usuarios/nuevo" role="button">
-                      <div class="d-flex align-items-center gap-1">
-                        <span class="msr">add</span>
-                        Agregar
-                      </div>
+              <div class="card-header">
+                <div class="row justify-content-between">
+                  <div class="col-md-6">
+                    <a class="btn btn-primary" href="usuarios/agregar" role="button">
+                      + Agregar usuario
                     </a>
                   </div>
                 </div>
@@ -74,8 +66,8 @@
                 <div>
                   <div class="table-responsive table-card mb-1">
                     <table id="datatable" class="table table-hover align-middle">
-                      <thead class="table-light text-muted">
-                        <tr>
+                      <thead>
+                        <tr class="table-active">
                           <th class="text-center">#</th>
                           <th class="text-center">Avatar</th>
                           <th class="text-center">Nombres</th>
@@ -106,11 +98,13 @@
                               <td class="text-left col-3"><?= $usuario['usuario'] ?></td>
                               <td class="col-2">
                                 <div class="d-flex justify-content-center">
-                                  <a class="btn btn-sm" href="/usuarios/editar/<?= $usuario['id_usuario'] ?>" role="button">
+                                  <a class="btn btn-sm" href="/usuarios/editar/<?= $usuario['id_usuario'] ?>" role="button"
+                                    data-bs-toggle="tooltip" data-bs-title="Editar">
                                     <span class="msr fs-5">edit</span>
                                   </a>
     
-                                  <button class="btn btn-sm" onclick="eliminar_usuario(<?= $usuario['id_usuario'] ?>)">
+                                  <button class="btn btn-sm" onclick="eliminar_usuario(<?= $usuario['id_usuario'] ?>)"
+                                    data-bs-toggle="tooltip" data-bs-title="Eliminar">
                                     <span class="msr fs-5">delete</span>
                                   </button>
                                 </div>
@@ -137,5 +131,6 @@
 
 
 <script src="<?= ASSETS_URL ?>/js/ajax/usuarios.js"></script>
+<script src="<?= ASSETS_URL ?>/js/plugins/popper.js"></script>
 
 <?php include LAYOUT_PATH.'/footer.php' ?>

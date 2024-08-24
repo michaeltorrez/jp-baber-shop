@@ -1,5 +1,4 @@
 <header id="page-topbar">
-  <!-- my-0 mx-auto -->
   <div class="navbar-header d-flex justify-content-between align-items-center">
     <div>
       <span class="msr">menu</span>

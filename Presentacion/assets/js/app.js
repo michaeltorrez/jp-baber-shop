@@ -38,99 +38,58 @@ btnThemeMode.addEventListener('click', () => {
   }
 })
 
-document.addEventListener("DOMContentLoaded", initActiveMenu)
 
-/*function initActiveMenu() {
-  var currentPath = location.pathname == "/" ? "index.html" : location.pathname.substring(1);
-  currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
-  if (currentPath) {
-    // navbar-nav
-    var a = document.getElementById("side-menu").querySelector('[href*="' + currentPath + '"]');
-    if (a) {
-      a.classList.add("active");
-      var parentCollapseDiv = a.closest(".collapse.sidebar-submenu");
-      if (parentCollapseDiv) {
-        parentCollapseDiv.classList.add("show");
-        //parentCollapseDiv.parentElement.children[0].classList.add("active");
-        parentCollapseDiv.parentElement.children[0].setAttribute("aria-expanded", "true");
-        if (parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown")) {
-          parentCollapseDiv.parentElement.closest(".collapse").classList.add("show");
-          if (parentCollapseDiv.parentElement.closest(".collapse").previousElementSibling)
-            parentCollapseDiv.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
 
-          if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
-            parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").classList.add("show");
-            if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling) {
+document.addEventListener("DOMContentLoaded", function() {
+  const currentPath = window.location.pathname;
 
-              parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
-              if ((document.documentElement.getAttribute("data-layout") == "horizontal") && parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse")) {
-                parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active")
-              }
-            }
-          }
-        }
-      }
+  // Función para activar el ítem del menú
+  function activateMenuItem(menuItem) {
+    menuItem.classList.add("active");
+
+    // Si el ítem está dentro de un colapso, expandir el colapso padre
+    const parentCollapse = menuItem.closest("ul.collapse");
+    if (parentCollapse) {
+      parentCollapse.classList.add("show");
     }
   }
-}*/
 
-/*function initActiveMenu() {
-  const currentPath = location.pathname.substring(1); // Remove leading slash
-
-  if (currentPath) {
-    const menuItem = document.querySelector(`#side-menu a[href*="${currentPath}"]`);
-    
-    if (menuItem) {
-      menuItem.classList.add("active");
-      let parentCollapseDiv = menuItem.closest(".collapse.sidebar-submenu");
-
-      while (parentCollapseDiv) {
-        parentCollapseDiv.classList.add("show");
-        const parentLink = parentCollapseDiv.previousElementSibling;
-        
-        if (parentLink) {
-          parentLink.setAttribute("aria-expanded", "true");
-          parentLink.classList.add("active");
-        }
-
-        parentCollapseDiv = parentCollapseDiv.parentElement.closest(".collapse.sidebar-submenu");
-      }
+  // Obtener todos los enlaces del menú
+  const menuLinks = document.querySelectorAll("#side-menu a.sidebar-link");
+  
+  // Variable para almacenar el enlace que coincide con la URL actual
+  let matchedLink = null
+  
+  // Iterar sobre cada enlace
+  menuLinks.forEach(link => {
+    const linkPath = new URL(link.href).pathname;
+    if (!link.href.includes('#') && (currentPath === linkPath || currentPath.startsWith(linkPath + "/"))) {
+      matchedLink = link
     }
+  })
+  
+  // Si se encontró un enlace que coincide, activarlo
+  if (matchedLink) {
+    activateMenuItem(matchedLink);
   }
-}*/
 
-function initActiveMenu() {
-  const currentPath = location.pathname.substring(1); // Remove leading slash
+});
 
-  if (currentPath) {
-    const menuItem = document.querySelector(`#side-menu a[href*="${currentPath}"]`);
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-    if (menuItem) {
-      menuItem.classList.add("active");
 
-      // Compruebe si el elemento del menú está dentro de un elemento principal contraído y, de ser así, muéstrelo
-      let parentCollapseDiv = menuItem.closest(".collapse.sidebar-submenu");
-      if (parentCollapseDiv) {
-        parentCollapseDiv.classList.add("show");
-        const parentLink = parentCollapseDiv.previousElementSibling;
-        
-        if (parentLink) {
-          parentLink.setAttribute("aria-expanded", "true");
-        }
-
-        // Repeat for any nested collapses
-        let nestedParentCollapse = parentCollapseDiv.parentElement.closest(".collapse.sidebar-submenu");
-        while (nestedParentCollapse) {
-          nestedParentCollapse.classList.add("show");
-          const nestedParentLink = nestedParentCollapse.previousElementSibling;
-          
-          if (nestedParentLink) {
-            nestedParentLink.setAttribute("aria-expanded", "true");
-          }
-
-          nestedParentCollapse = nestedParentCollapse.parentElement.closest(".collapse.sidebar-submenu");
-        }
-      }
+function mostrarToast() {
+  const toastMessage = sessionStorage.getItem('toastMessage')
+  if (toastMessage) {
+    toastr.options = {
+      "closeButton": true,
+      "positionClass": "toast-bottom-right"
     }
+    toastr['success'](toastMessage)
+    // Limpiar el mensaje después de mostrarlo
+    sessionStorage.removeItem('toastMessage')
   }
 }
+
+mostrarToast()

@@ -32,9 +32,9 @@
     <div class="page-content">
       <div class="container-fluid">
         <?php
-          include_archivo_con_variables('../../layout/page-title.php', array('pagetitle' => 'Roles', 'title' => 'Lista de roles'));
+          include_archivo_con_variables('componentes/breadcrumb.php', array('pagetitle' => 'Roles'));
         ?>
-        <div class="row mt-4">
+        <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header py-3">
